@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/api/constance.dart';
 import 'package:ecommerce/data/model/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,8 +26,6 @@ class FavoriteScreen extends StatelessWidget {
           const Text('favorite'),
           TextButton(
             onPressed: () {
-             var data= controllerImp.data.data.products.where((element) => element.name.toLowerCase().contains('')).toList();
-             print(data.length);
           }, child: const Text(
             'print token'
           ),),

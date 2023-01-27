@@ -28,21 +28,23 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
                             'Sella',
                             style: Theme.of(context).textTheme.headline1,
                           ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.search),
-                          onPressed: () {},
-                        ),
-                      ],
+                          IconButton(
+                            icon: const Icon(Icons.search,size: 30,),
+                            onPressed: () {
+                              Get.toNamed(AppRoutes.searchScreen);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
@@ -156,8 +158,7 @@ class HomeScreen extends StatelessWidget {
                                                   )
                                                 : const Text(''),
                                             const Spacer(),
-                                            GetBuilder<
-                                                BottomNavigationControllerImp>(
+                                            GetBuilder<BottomNavigationControllerImp>(
                                               builder: (controller) =>
                                                   IconButton(
                                                       onPressed: () {
@@ -190,7 +191,7 @@ class HomeScreen extends StatelessWidget {
                                                             )),
                                             )
                                           ],
-                                        )
+                                        ),
                                       ],
                                     ),
                                     controller.data.data.products[index]

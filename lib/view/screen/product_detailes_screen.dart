@@ -33,7 +33,50 @@ class ProductDetailsScreen extends StatelessWidget {
           Container(
             width: Get.width,
             height: 100,
-            color: Colors.red,
+            child: Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      //TODO add item to cart
+                    },
+                    child: Container(
+                      color: const Color(0xff274b69),
+                      margin: const EdgeInsets.only(
+                          bottom: 50, left: 20, right: 10),
+                      width: double.infinity,
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text("Add TO Cart"),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Icon(
+                            Icons.shopping_cart,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  color: const Color(0xff274b69),
+                  margin: const EdgeInsets.only(bottom: 50, left: 2, right: 20),
+                  child: IconButton(
+                    onPressed: () {
+                      //TODO add item to favorite
+                    },
+                    icon: const Icon(
+                      Icons.favorite_border,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),
@@ -62,9 +105,8 @@ class ProductDetailsScreen extends StatelessWidget {
                       initialPage: 0,
                       enableInfiniteScroll: true,
                       autoPlay: true,
-                      autoPlayInterval: const Duration(seconds: 4),
-                      autoPlayAnimationDuration:
-                          const Duration(milliseconds: 800),
+                      autoPlayInterval: const Duration(seconds: 6),
+                      autoPlayAnimationDuration: const Duration(seconds: 1),
                       autoPlayCurve: Curves.ease,
                       enlargeCenterPage: true,
                       enlargeFactor: 0.3,
@@ -84,10 +126,15 @@ class ProductDetailsScreen extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.all(20),
-                margin: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(
+                    top: 20, left: 20, right: 20, bottom: 80),
+                margin: const EdgeInsets.only(
+                  top: 10,
+                ),
                 width: Get.width,
-                height: 500,
+                constraints: BoxConstraints(
+                    minHeight:
+                        Get.height - 310 - MediaQuery.of(context).padding.top),
                 decoration: const BoxDecoration(
                     color: AppColor.blueGrey,
                     borderRadius: BorderRadius.only(
@@ -104,6 +151,42 @@ class ProductDetailsScreen extends StatelessWidget {
                           .bodyText1!
                           .copyWith(color: AppColor.white),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          '${product.price}\$',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        product.discount != 0
+                            ? Text(
+                                '${product.oldPrice}\$',
+                                style: const TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  color: Colors.red,
+                                  fontSize: 14,
+                                ),
+                              )
+                            : const Text(''),
+                      ],
+                    ),
+                    const Divider(
+                      color: AppColor.white,
+                    ),
+                    Text(
+                      "Description :",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(color: AppColor.white, fontSize: 20),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 12),
+                        child: Text(product.description))
                   ],
                 ),
               )

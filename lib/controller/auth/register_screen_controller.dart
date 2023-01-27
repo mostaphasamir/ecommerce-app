@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../core/api/api.dart';
+import '../../core/api/constance.dart';
 import '../../core/constance/app_routs.dart';
+import '../../core/service/services.dart';
+import '../../data/model/shop_login_model.dart';
 
 abstract class RegisterScreenController extends GetxController
 {
@@ -20,10 +23,11 @@ class RegisterScreenControllerImp extends RegisterScreenController
   late TextEditingController phone ;
   late TextEditingController email ;
   late TextEditingController password ;
+
   bool obscure =true ;
   final Api _api =Api() ;
 
-
+  MyServices myServices=Get.find();
   @override
   void onInit() {
   globalKey =GlobalKey<FormState>();
@@ -54,7 +58,15 @@ class RegisterScreenControllerImp extends RegisterScreenController
           'phone':phone.text,
           'email':email.text,
           'password':password.text,
-        }).then((value) => print(value));
+        }).then((value){
+          ShopLoginModel shop = ShopLoginModel.fromJson(value);
+          if(shop.status==true)
+          {
+            myServices.sharedPreferences.setString('token', shop.data!.token);
+            token = shop.data!.token ;
+            Get.offAllNamed(AppRoutes.home);
+          }
+        });
       }
   }
 

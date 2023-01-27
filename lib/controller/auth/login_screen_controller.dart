@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../core/api/api.dart';
+import '../../core/api/constance.dart';
 import '../../core/service/services.dart';
 
 abstract class LoginScreenController extends GetxController
@@ -65,6 +66,7 @@ class LoginScreenControllerImp extends LoginScreenController
          if(shop.status==true)
            {
              myServices.sharedPreferences.setString('token', shop.data!.token);
+             token = shop.data!.token ;
              Get.offAllNamed(AppRoutes.home);
            }
        }

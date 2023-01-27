@@ -18,7 +18,6 @@ class BottomNavigationControllerImp extends BottomNavigationController {
   @override
   void onInit() {
     getData();
-
     super.onInit();
   }
   int currentIndex = 0 ;
@@ -43,7 +42,6 @@ class BottomNavigationControllerImp extends BottomNavigationController {
 
   getData()
   {
-
     Api api = Api();
     api.get(url: "https://student.valuxapps.com/api/home",token: token).then((value) {
        data =HomeModel.fromJson(value);
@@ -69,6 +67,6 @@ class BottomNavigationControllerImp extends BottomNavigationController {
         headers: {
       'lang':'ar',
       'Authorization':token.toString(),
-    }).then((value) => value['status']==false?Get.snackbar('Error', 'Something Wrong'):null);
+    }).then((value) => value['status']==false?Get.snackbar('Error', value.toString()):null);
   }
 }
