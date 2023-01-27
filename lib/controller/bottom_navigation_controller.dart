@@ -48,7 +48,6 @@ class BottomNavigationControllerImp extends BottomNavigationController {
     api.get(url: "https://student.valuxapps.com/api/home",token: token).then((value) {
        data =HomeModel.fromJson(value);
        data.data.products.forEach((element) {favoritesProduct[element.id]=element.inFavorites;});
-       print(favoritesProduct);
        isLoading = false  ;
        update();
     });

@@ -6,7 +6,6 @@ class AppTheme {
 
   static ThemeData customLightTheme=ThemeData.light().copyWith(
     inputDecorationTheme: const InputDecorationTheme(
-      
       border: InputBorder.none,
       hintStyle: TextStyle(fontFamily:'Source_Serif_Pro' ,color: AppColor.black),
       fillColor: AppColor.black,

@@ -11,5 +11,5 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name:AppRoutes.login , page: ()=>const LoginScreen(),middlewares:[ MyMiddleWare()]),
   GetPage(name:AppRoutes.register , page: ()=> const RegisterScreen()),
   GetPage(name:AppRoutes.home , page: ()=>  BottomNavigation()),
-  GetPage(name:AppRoutes.productDetailsScreen , page: ()=>  ProductDetailsScreen()),
+  GetPage(name:AppRoutes.productDetailsScreen , page: ()=> ProductDetailsScreen(),transition:Transition.leftToRight,transitionDuration: const Duration(milliseconds:300) ),
 ];
