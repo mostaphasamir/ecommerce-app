@@ -1,4 +1,5 @@
 import 'package:ecommerce/core/constance/app_color.dart';
+import 'package:ecommerce/core/constance/app_routs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,12 +12,16 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SearchScreenControllerImp controller = Get.put(SearchScreenControllerImp());
     return Scaffold(
+      backgroundColor: AppColor.blueGrey,
       appBar: AppBar(
-        backgroundColor: AppColor.blueGrey,
+        backgroundColor: AppColor.blueGreyDark,
         title: TextField(
           onChanged: (value) {
             controller.changeSearchValue(value);
           },
+          decoration: const InputDecoration(
+            hintText: 'Search for product ...',
+          ),
         ),
       ),
       body: GetBuilder<SearchScreenControllerImp>(
@@ -27,10 +32,19 @@ class SearchScreen extends StatelessWidget {
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: controller.dataFilter.length,
-                    separatorBuilder: (_, __) => const Divider(),
+                    separatorBuilder: (context, index) =>const Divider(),
                     itemBuilder: (context, int index) {
-                      return ListTile(
-                        title: Text(controller.dataFilter[index].name,style: TextStyle(color: Colors.green),),
+                      return GestureDetector(
+                        onTap: () =>controller.goProductDetails(controller.dataFilter[index]),
+                        child: ListTile(
+                          leading:Hero(
+                            tag: controller.dataFilter[index].id,
+                            child: Image(image: NetworkImage(
+                                controller.dataFilter[index].image,
+                            ),width: 70,fit: BoxFit.fill,),
+                          ) ,
+                          title: Text(controller.dataFilter[index].name,style: Theme.of(context).textTheme.bodyText1),
+                        ),
                       );
                     },
                   ),

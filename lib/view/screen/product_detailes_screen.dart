@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce/core/constance/app_color.dart';
-import 'package:ecommerce/data/model/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -12,7 +11,6 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductModel product = Get.arguments;
     ProductDetailsImpController controller =
         Get.put(ProductDetailsImpController());
     return Scaffold(
@@ -23,14 +21,14 @@ class ProductDetailsScreen extends StatelessWidget {
             onPressed: () {
               controller.goBack();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               size: 40,
-              color: AppColor.blueGrey,
+              color: AppColor.blueGreyVeryDark,
             ),
           ),
-          Spacer(),
-          Container(
+          const Spacer(),
+          SizedBox(
             width: Get.width,
             height: 100,
             child: Row(
@@ -41,7 +39,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       //TODO add item to cart
                     },
                     child: Container(
-                      color: const Color(0xff274b69),
+                      color: AppColor.blueGreyDark,
                       margin: const EdgeInsets.only(
                           bottom: 50, left: 20, right: 10),
                       width: double.infinity,
@@ -89,38 +87,40 @@ class ProductDetailsScreen extends StatelessWidget {
               Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  CarouselSlider(
-                    carouselController: controller.carouselController,
-                    items: product.images
-                        .map((e) => Image(
-                              image: NetworkImage(e),
-                              width: double.infinity,
-                              fit: BoxFit.contain,
-                            ))
-                        .toList(),
-                    options: CarouselOptions(
-                      height: 300,
-                      aspectRatio: 16 / 9,
-                      viewportFraction: 1,
-                      initialPage: 0,
-                      enableInfiniteScroll: true,
-                      autoPlay: true,
-                      autoPlayInterval: const Duration(seconds: 6),
-                      autoPlayAnimationDuration: const Duration(seconds: 1),
-                      autoPlayCurve: Curves.ease,
-                      enlargeCenterPage: true,
-                      enlargeFactor: 0.3,
-                      scrollDirection: Axis.horizontal,
-                      onPageChanged: (index, reason) {
-                        controller.changeIndex(index);
-                      },
+                  Hero(
+                    tag: controller.product.id,
+                    child: CarouselSlider(
+                      carouselController: controller.carouselController,
+                      items: controller.product.images.map((e) => Image(
+                                image: NetworkImage(e),
+                                width: double.infinity,
+                                fit: BoxFit.contain,
+                              ),)
+                          .toList(),
+                      options: CarouselOptions(
+                        height: 300,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 1,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        autoPlay: true,
+                        autoPlayInterval: const Duration(seconds: 6),
+                        autoPlayAnimationDuration: const Duration(seconds: 1),
+                        autoPlayCurve: Curves.ease,
+                        enlargeCenterPage: true,
+                        enlargeFactor: 0.3,
+                        scrollDirection: Axis.horizontal,
+                        onPageChanged: (index, reason) {
+                          controller.changeIndex(index);
+                        },
+                      ),
                     ),
                   ),
                   GetBuilder<ProductDetailsImpController>(
                     builder: (controller) => AnimatedSmoothIndicator(
                       activeIndex: controller.currentImageIndex,
-                      count: product.images.length,
-                      effect: WormEffect(),
+                      count: controller.product.images.length,
+                      effect: const WormEffect(),
                     ),
                   ),
                 ],
@@ -145,7 +145,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.name,
+                      controller.product.name,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
@@ -155,16 +155,16 @@ class ProductDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          '${product.price}\$',
-                          style: TextStyle(
+                          '${controller.product.price}\$',
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
-                        product.discount != 0
+                        controller.product.discount != 0
                             ? Text(
-                                '${product.oldPrice}\$',
+                                '${controller.product.oldPrice}\$',
                                 style: const TextStyle(
                                   decoration: TextDecoration.lineThrough,
                                   color: Colors.red,
@@ -186,7 +186,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     ),
                     Padding(
                         padding: const EdgeInsets.only(left: 12),
-                        child: Text(product.description))
+                        child: Text(controller.product.description))
                   ],
                 ),
               )

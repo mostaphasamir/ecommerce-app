@@ -1,4 +1,5 @@
 import 'package:ecommerce/core/api/api.dart';
+import 'package:ecommerce/core/constance/app_routs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -45,18 +46,55 @@ class BottomNavigationControllerImp extends BottomNavigationController {
     Api api = Api();
     api.get(url: "https://student.valuxapps.com/api/home",token: token).then((value) {
        data =HomeModel.fromJson(value);
-       data.data.products.forEach((element) {favoritesProduct[element.id]=element.inFavorites;});
+       for (var element in data.data.products) {favoritesProduct[element.id]=element.inFavorites;}
        isLoading = false  ;
        update();
+
+
+       favoriteScreenProduct = data.data.products.where((element) => element.inFavorites==true).toList() ;
     });
   }
+
+
+  goToSearchScreen()
+  {
+    Get.toNamed(AppRoutes.searchScreen,arguments: {
+      'data':data,
+    });
+  }
+
+
+  goToProductDetails(ProductModel product)
+  {
+    Get.toNamed(AppRoutes.productDetailsScreen,arguments: {
+      'productData':product,
+    });
+  }
+
   //product
 
 
 
   addOrRemoveFromFavorite(int id)
   {
+
+    if(favoritesProduct[id]==true)
+      {
+        favoriteScreenProduct.removeWhere((element) => element.id==id);
+
+      }
+    else{
+      for (var element in data.data.products) {
+        if(element.id==id)
+        {
+          favoriteScreenProduct.add(element);
+        }
+      }
+    }
+
+
     favoritesProduct.update(id, (value) => value = !value);
+
     update();
 
     Api api = Api();
@@ -68,5 +106,17 @@ class BottomNavigationControllerImp extends BottomNavigationController {
       'lang':'ar',
       'Authorization':token.toString(),
     }).then((value) => value['status']==false?Get.snackbar('Error', value.toString()):null);
+  }
+
+
+  //favorite
+
+  List<ProductModel> favoriteScreenProduct = [];
+
+
+  removeFromFavorite(index)
+  {
+    addOrRemoveFromFavorite(favoriteScreenProduct[index].id) ;
+    update();
   }
 }

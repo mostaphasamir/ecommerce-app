@@ -19,12 +19,12 @@ class AppTheme {
 
 class AppFontTheme{
   static const appFontArabicTheme = TextTheme(
-    headline1: TextStyle(fontFamily: 'Cairo',fontWeight: FontWeight.bold,fontSize: 40,color: AppColor.black),
-    bodyText1: TextStyle(height: 2,color: AppColor.gray) ,
+    headline1: TextStyle(fontFamily: 'Cairo',fontWeight: FontWeight.w800,fontSize: 40,color: AppColor.white),
+    bodyText1: TextStyle(color: AppColor.white,fontSize: 16,fontWeight: FontWeight.w300),
   );
   static const appFontEnglishTheme = TextTheme(
-    headline1: TextStyle(fontFamily: 'Source_Serif_Pro',fontWeight: FontWeight.bold,fontSize: 40,color: AppColor.black),
-    bodyText1: TextStyle(color: AppColor.black,fontSize: 16,fontWeight: FontWeight.w300),
+    headline1: TextStyle(fontFamily: 'Source_Serif_Pro',fontWeight: FontWeight.w800,fontSize: 40,color: AppColor.white),
+    bodyText1: TextStyle(color: AppColor.white,fontSize: 16,fontWeight: FontWeight.w300),
   );
 
 

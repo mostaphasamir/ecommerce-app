@@ -1,9 +1,7 @@
 import 'package:ecommerce/data/model/home_model.dart';
 import 'package:get/get.dart';
 
-import '../core/api/api.dart';
-import '../core/api/constance.dart';
-import 'bottom_navigation_controller.dart';
+import '../core/constance/app_routs.dart';
 
 abstract class SearchScreenController extends GetxController
 {
@@ -28,18 +26,25 @@ class SearchScreenControllerImp extends SearchScreenController
 
   getData()
   {
-    Api api = Api();
-    api.get(url: "https://student.valuxapps.com/api/home",token: token).then((value) {
-      data =HomeModel.fromJson(value);
-    });
+      data =Get.arguments['data'];
   }
+
+
   @override
-  changeSearchValue(String value) {
+  changeSearchValue(String value){
     searchValue= value ;
     dataFilter.clear();
     dataFilter.addAll(data.data.products.where((element) => element.name.toLowerCase().contains(searchValue)).toList());
-    print(dataFilter.length);
     update();
+  }
+
+
+  goProductDetails(ProductModel product)
+  {
+    Get.toNamed(AppRoutes.productDetailsScreen,arguments:{
+      'productData':product,
+    },);
+
   }
 
 }
