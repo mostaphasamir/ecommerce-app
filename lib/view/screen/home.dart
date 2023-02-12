@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Text(
                               'Sella',
-                              style: Theme.of(context).textTheme.headline1,
+                              style: Theme.of(context).textTheme.displayLarge,
                             ),
                             IconButton(
                               icon: const Icon(Icons.search,size: 30,color: AppColor.white,),
@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
                         child: Text('Product',
-                            style: Theme.of(context).textTheme.headline1),
+                            style: Theme.of(context).textTheme.displayLarge),
                       ),
                       AnimatedGridView(
                         padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -131,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1!
+                                                .displayMedium!
                                                 .copyWith(color: AppColor.white),
                                           ),
                                           const Spacer(),

@@ -1,9 +1,11 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:ecommerce/core/api/api.dart';
 import 'package:ecommerce/core/constance/app_routs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../core/api/constance.dart';
+import '../data/model/cart_model.dart';
 import '../data/model/home_model.dart';
 import '../view/screen/cart.dart';
 import '../view/screen/favorite_screen.dart';
@@ -16,9 +18,13 @@ abstract class BottomNavigationController extends GetxController
 }
 class BottomNavigationControllerImp extends BottomNavigationController {
 
+  Api api = Api();
+
   @override
   void onInit() {
+    print(token);
     getData();
+    getCartProduct() ;
     super.onInit();
   }
   int currentIndex = 0 ;
@@ -43,15 +49,13 @@ class BottomNavigationControllerImp extends BottomNavigationController {
 
   getData()
   {
-    Api api = Api();
     api.get(url: "https://student.valuxapps.com/api/home",token: token).then((value) {
        data =HomeModel.fromJson(value);
        for (var element in data.data.products) {favoritesProduct[element.id]=element.inFavorites;}
        isLoading = false  ;
        update();
 
-
-       favoriteScreenProduct = data.data.products.where((element) => element.inFavorites==true).toList() ;
+       favoriteScreenProduct.value = data.data.products.where((element) => element.inFavorites==true).toList() ;
     });
   }
 
@@ -64,13 +68,11 @@ class BottomNavigationControllerImp extends BottomNavigationController {
   }
 
 
-  goToProductDetails(ProductModel product)
+  goToProductDetails(ProductModel productModel)
   {
-    Get.toNamed(AppRoutes.productDetailsScreen,arguments: {
-      'productData':product,
-    });
+    product =productModel ;
+    Get.toNamed(AppRoutes.productDetailsScreen);
   }
-
   //product
 
 
@@ -96,8 +98,6 @@ class BottomNavigationControllerImp extends BottomNavigationController {
     favoritesProduct.update(id, (value) => value = !value);
 
     update();
-
-    Api api = Api();
     api.post(url:"https://student.valuxapps.com/api/favorites" ,
         body:{
         "product_id": id.toString() ,
@@ -111,12 +111,88 @@ class BottomNavigationControllerImp extends BottomNavigationController {
 
   //favorite
 
-  List<ProductModel> favoriteScreenProduct = [];
+ var favoriteScreenProduct = [].obs;
 
 
   removeFromFavorite(index)
   {
     addOrRemoveFromFavorite(favoriteScreenProduct[index].id) ;
+  }
+
+  //cart Data
+  late CartModel cartDate ;
+  var cartProduct = [].obs ;
+  var quantity  = {}.obs;
+
+  getCartProduct()
+  {
+    api.get(url: "https://student.valuxapps.com/api/carts",token: token).then((value) {
+      cartDate =CartModel.fromJson(value);
+      for (var element in cartDate.data.cartItems) {
+        cartProduct.add(element.product);
+        quantity[element.product.id.toInt()]=element.quantity.toInt() ;
+        print(cartProduct);
+      }
+    });
+  }
+
+
+
+
+  //product details controller
+
+  int currentImageIndex = 0 ;
+  CarouselController carouselController = CarouselController();
+  late ProductModel product ;
+
+
+
+  changeImageIndex(int index) {
+    currentImageIndex = index ;
     update();
+  }
+
+  goBack() {
+    Get.back();
+    currentImageIndex= 0 ;
+  }
+
+  addToCart(ProductModel model)
+  {
+    if(checkProduct(model))
+      {
+        quantity[model.id.toInt()]++ ;
+      }
+    else
+      {
+        quantity[model.id]=1;
+        api.post(url: "https://student.valuxapps.com/api/carts",
+            body: {
+          "product_id": model.id.toString(),
+        },
+          headers: {
+            'lang':'en',
+            'Authorization':token??'',
+          }
+        ).then((value) {
+          if(value['status']==true)
+            {
+              Get.snackbar('done',"Item added to cart successfully.");
+            }
+        }).catchError((e)=>Get.snackbar('Error', e.toString()));
+        cartProduct.add(model);
+      }
+  }
+
+
+  checkProduct(ProductModel model)
+  {
+    for(ProductModel element in cartProduct){
+      if (element.id==model.id)
+        {
+          return true ;
+        }
+    }
+    return false ;
   }
 }

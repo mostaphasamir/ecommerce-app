@@ -182,7 +182,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     InkWell(
                       onTap: () => controller.register(),
                       child: Container(
@@ -205,12 +205,12 @@ class RegisterScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Already have an account?',style: Theme.of(context).textTheme.bodyText1,),
+                        Text('Already have an account?',style: Theme.of(context).textTheme.displayMedium,),
                         TextButton(
                           onPressed: () {
                             controller.goToLogin();
                           },
-                          child: Text(
+                          child: const Text(
                             'Login here',
                             style: TextStyle(
                               color: Color.fromRGBO(143, 148, 251, 1),

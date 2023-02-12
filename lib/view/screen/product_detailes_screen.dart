@@ -4,15 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../controller/product_details_controller.dart';
+import '../../controller/bottom_navigation_controller.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+   ProductDetailsScreen({super.key});
+  final BottomNavigationControllerImp controller = Get.put(BottomNavigationControllerImp());
 
   @override
   Widget build(BuildContext context) {
-    ProductDetailsImpController controller =
-        Get.put(ProductDetailsImpController());
     return Scaffold(
       floatingActionButton: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +35,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      //TODO add item to cart
+                      controller.addToCart(controller.product);
                     },
                     child: Container(
                       color: AppColor.blueGreyDark,
@@ -65,7 +64,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(bottom: 50, left: 2, right: 20),
                   child: IconButton(
                     onPressed: () {
-                      //TODO add item to favorite
+                      //TODO ADD to favorite
                     },
                     icon: const Icon(
                       Icons.favorite_border,
@@ -89,34 +88,37 @@ class ProductDetailsScreen extends StatelessWidget {
                 children: [
                   Hero(
                     tag: controller.product.id,
-                    child: CarouselSlider(
-                      carouselController: controller.carouselController,
-                      items: controller.product.images.map((e) => Image(
-                                image: NetworkImage(e),
-                                width: double.infinity,
-                                fit: BoxFit.contain,
-                              ),)
-                          .toList(),
-                      options: CarouselOptions(
-                        height: 300,
-                        aspectRatio: 16 / 9,
-                        viewportFraction: 1,
-                        initialPage: 0,
-                        enableInfiniteScroll: true,
-                        autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 6),
-                        autoPlayAnimationDuration: const Duration(seconds: 1),
-                        autoPlayCurve: Curves.ease,
-                        enlargeCenterPage: true,
-                        enlargeFactor: 0.3,
-                        scrollDirection: Axis.horizontal,
-                        onPageChanged: (index, reason) {
-                          controller.changeIndex(index);
-                        },
+                    child: PageStorage(
+                      bucket: PageStorageBucket(),
+                      child: CarouselSlider(
+                        carouselController: controller.carouselController,
+                        items: controller.product.images.map((e) => Image(
+                                  image: NetworkImage(e),
+                                  width: double.infinity,
+                                  fit: BoxFit.contain,
+                                ),)
+                            .toList(),
+                        options: CarouselOptions(
+                          height: 300,
+                          aspectRatio: 16 / 9,
+                          viewportFraction: 1,
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 6),
+                          autoPlayAnimationDuration: const Duration(seconds: 1),
+                          autoPlayCurve: Curves.ease,
+                          enlargeCenterPage: true,
+                          enlargeFactor: 0.3,
+                          scrollDirection: Axis.horizontal,
+                          onPageChanged: (index, reason) {
+                            controller.changeImageIndex(index);
+                          },
+                        ),
                       ),
                     ),
                   ),
-                  GetBuilder<ProductDetailsImpController>(
+                  GetBuilder<BottomNavigationControllerImp>(
                     builder: (controller) => AnimatedSmoothIndicator(
                       activeIndex: controller.currentImageIndex,
                       count: controller.product.images.length,
@@ -148,7 +150,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       controller.product.name,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .displayMedium!
                           .copyWith(color: AppColor.white),
                     ),
                     Row(
@@ -181,7 +183,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       "Description :",
                       style: Theme.of(context)
                           .textTheme
-                          .headline1!
+                          .displayMedium!
                           .copyWith(color: AppColor.white, fontSize: 20),
                     ),
                     Padding(

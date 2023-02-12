@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                         child:  Center(
                           child: Text(
                             "Login",
-                            style: Theme.of(context).textTheme.headline1,
+                            style: Theme.of(context).textTheme.displayLarge,
                           ),
                         ),
                       ),
@@ -109,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                                     hintText: "Email or Phone number",
                                     hintStyle:
                                         TextStyle(color: Colors.grey[400])),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.displayMedium,
                               ),
                             ),
                             Container(
@@ -136,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                                       border: InputBorder.none,
                                       hintText: "Password",
                                       hintStyle:TextStyle(color: Colors.grey[400])),
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.displayMedium,
                                 ),
                               ),
                             ),
@@ -180,12 +180,12 @@ class LoginScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Don\'t have an account?',style: Theme.of(context).textTheme.bodyText1),
+                        Text('Don\'t have an account?',style: Theme.of(context).textTheme.displayMedium),
                         TextButton(
                           onPressed: () {
                             controller.goToRegisterScreen();
                           },
-                          child: Text(
+                          child: const Text(
                             'SignUp here',
                             style: TextStyle(
                               color: Color.fromRGBO(143, 148, 251, 1),

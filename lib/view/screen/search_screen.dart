@@ -43,7 +43,7 @@ class SearchScreen extends StatelessWidget {
                                 controller.dataFilter[index].image,
                             ),width: 70,fit: BoxFit.fill,),
                           ) ,
-                          title: Text(controller.dataFilter[index].name,style: Theme.of(context).textTheme.bodyText1),
+                          title: Text(controller.dataFilter[index].name,style: Theme.of(context).textTheme.displayMedium),
                         ),
                       );
                     },

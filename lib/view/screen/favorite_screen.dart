@@ -21,9 +21,9 @@ class FavoriteScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text('Favorites',style: Theme.of(context).textTheme.headline1,) ,
+             Text('Favorites',style: Theme.of(context).textTheme.displayLarge,) ,
             const SizedBox(height: 10,),
-            GetBuilder<BottomNavigationControllerImp>(
+            GetX<BottomNavigationControllerImp>(
               builder: (controller) => Expanded(
                 child: ListView.separated(
                   itemBuilder: (context, index) => favoriteScreenItem(
