@@ -1,7 +1,11 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:ecommerce/core/api/api.dart';
+import 'package:ecommerce/core/constance/app_color.dart';
 import 'package:ecommerce/core/constance/app_routs.dart';
+import 'package:ecommerce/core/service/services.dart';
+import 'package:ecommerce/data/model/shop_login_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../core/api/constance.dart';
@@ -28,7 +32,7 @@ class BottomNavigationControllerImp extends BottomNavigationController {
     super.onInit();
   }
   int currentIndex = 0 ;
-  List<Widget> screen = [
+  List<Widget> screen =const [
     HomeScreen(),
     FavoriteScreen(),
     CartScreen(),
@@ -57,6 +61,10 @@ class BottomNavigationControllerImp extends BottomNavigationController {
 
        favoriteScreenProduct.value = data.data.products.where((element) => element.inFavorites==true).toList() ;
     });
+
+    api.get(url: 'https://student.valuxapps.com/api/profile',token: token).then((value) {
+      userData = ShopLoginModel.fromJson(value);
+    });
   }
 
 
@@ -79,7 +87,6 @@ class BottomNavigationControllerImp extends BottomNavigationController {
 
   addOrRemoveFromFavorite(int id)
   {
-
     if(favoritesProduct[id]==true)
       {
         favoriteScreenProduct.removeWhere((element) => element.id==id);
@@ -123,20 +130,57 @@ class BottomNavigationControllerImp extends BottomNavigationController {
   late CartModel cartDate ;
   var cartProduct = [].obs ;
   var quantity  = {}.obs;
+  RxDouble total = 0.0.obs  ;
 
   getCartProduct()
   {
     api.get(url: "https://student.valuxapps.com/api/carts",token: token).then((value) {
       cartDate =CartModel.fromJson(value);
-      for (var element in cartDate.data.cartItems) {
+      for (var element in cartDate.data.cartItems)
+      {
         cartProduct.add(element.product);
         quantity[element.product.id.toInt()]=element.quantity.toInt() ;
-        print(cartProduct);
       }
-    });
+    }).then( (value) =>  checkOutCalc(),);
+  }
+
+  removeFromCart(ProductModel model)
+  {
+
+    cartProduct.remove(model);
+    checkOutCalc();
+    api.post(url: "https://student.valuxapps.com/api/carts",
+        body: {
+          "product_id": model.id.toString(),
+        },
+        headers: {
+          'lang':'en',
+          'Authorization':token,
+        }
+    ).catchError((e)=>printError(info: e.toString()));
   }
 
 
+  incrementQuantity(int id)
+  {
+    quantity[id.toInt()]++ ;
+    checkOutCalc();
+  }
+  decrementQuantity(int id)
+  {
+    quantity[id.toInt()]<=1?Null :quantity[id.toInt()]-- ;
+    checkOutCalc();
+  }
+
+
+  checkOutCalc()
+  {
+    total.value = 0 ;
+    for(ProductModel item in cartProduct)
+      {
+        total.value += item.price * quantity[item.id.toInt()];
+      }
+  }
 
 
   //product details controller
@@ -172,16 +216,24 @@ class BottomNavigationControllerImp extends BottomNavigationController {
         },
           headers: {
             'lang':'en',
-            'Authorization':token??'',
+            'Authorization':token,
           }
         ).then((value) {
-          if(value['status']==true)
+          if(value['status'])
             {
-              Get.snackbar('done',"Item added to cart successfully.");
+              Fluttertoast.showToast(
+                  msg: "Item added to cart successfully.",
+                  toastLength: Toast.LENGTH_SHORT,
+                  textColor: AppColor.white,
+                  backgroundColor: AppColor.blueGreyVeryDark ,
+                gravity: ToastGravity.BOTTOM,
+              );
             }
+        // ignore: invalid_return_type_for_catch_error
         }).catchError((e)=>Get.snackbar('Error', e.toString()));
         cartProduct.add(model);
       }
+    checkOutCalc() ;
   }
 
 
@@ -194,5 +246,37 @@ class BottomNavigationControllerImp extends BottomNavigationController {
         }
     }
     return false ;
+  }
+
+
+  //search controller
+
+
+  late String searchValue ;
+  List<ProductModel> dataFilter =[] ;
+
+
+  changeSearchValue(String value){
+    searchValue= value ;
+    dataFilter.clear();
+    dataFilter.addAll(data.data.products.where((element) => element.name.toLowerCase().contains(searchValue)).toList());
+    update();
+  }
+
+  //############################//
+
+  //setting
+
+   // api.get(url: 'https://student.valuxapps.com/api/profile').then()
+
+
+  late ShopLoginModel userData ;
+  MyServices myServices=Get.find();
+  logout()
+  {
+
+    myServices.sharedPreferences.remove('token');
+    token='';
+    Get.offAllNamed(AppRoutes.login);
   }
 }

@@ -72,7 +72,6 @@ class RegisterScreenControllerImp extends RegisterScreenController
 
   @override
   void dispose() {
-    globalKey.currentState!.dispose();
     email.dispose();
     password.dispose();
     name.dispose();

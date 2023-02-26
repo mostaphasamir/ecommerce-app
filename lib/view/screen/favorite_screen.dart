@@ -17,7 +17,7 @@ class FavoriteScreen extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
-        color: AppColor.blueGrey,
+        color: AppColor.gray,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
-
 class ShopLoginModel {
   final bool status;
 
-  final String message;
+  final dynamic message;
 
   final UserData? data;
 

@@ -3,16 +3,16 @@ import 'home_model.dart';
 class CartModel {
   CartModel({
     required this.status,
-    this.message,
+    required this.message,
     required this.data,
   });
   late final bool status;
-  late final Null message;
+  late final String ? message;
   late final Data data;
 
   CartModel.fromJson(Map<String, dynamic> json){
     status = json['status'];
-    message = null;
+    message =  json['message']==null?null:json['message'];
     data = Data.fromJson(json['data']);
   }
 }
@@ -24,8 +24,8 @@ class Data {
     required this.total,
   });
   late final List<CartItems> cartItems;
-  late final int subTotal;
-  late final int total;
+  late final dynamic subTotal;
+  late final dynamic total;
 
   Data.fromJson(Map<String, dynamic> json){
     cartItems = List.from(json['cart_items']).map((e)=>CartItems.fromJson(e)).toList();

@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/constance/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -107,11 +108,10 @@ class RegisterScreen extends StatelessWidget {
                                     max: 20,min: 5,type: 'text'
                                 ),
                                 controller: controller.name,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     hintText: "Your Full Name",
-                                    hintStyle:
-                                    TextStyle(color: Colors.grey[400])),
+                                  ),
                               ),
                             ),
                             Container(
@@ -125,11 +125,10 @@ class RegisterScreen extends StatelessWidget {
                                     max: 20,min: 5,type: 'phone'
                                 ),
                                 controller: controller.phone,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     hintText: "Phone number",
-                                    hintStyle:
-                                    TextStyle(color: Colors.grey[400])),
+                                   ),
                               ),
                             ),
                             Container(

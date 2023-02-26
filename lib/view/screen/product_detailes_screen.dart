@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce/core/constance/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -38,7 +39,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       controller.addToCart(controller.product);
                     },
                     child: Container(
-                      color: AppColor.blueGreyDark,
+                      color: AppColor.primary,
                       margin: const EdgeInsets.only(
                           bottom: 50, left: 20, right: 10),
                       width: double.infinity,
@@ -60,11 +61,12 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  color: const Color(0xff274b69),
+                  color: AppColor.primary,
                   margin: const EdgeInsets.only(bottom: 50, left: 2, right: 20),
                   child: IconButton(
                     onPressed: () {
                       //TODO ADD to favorite
+
                     },
                     icon: const Icon(
                       Icons.favorite_border,
@@ -75,6 +77,7 @@ class ProductDetailsScreen extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 20,),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
@@ -138,7 +141,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     minHeight:
                         Get.height - 310 - MediaQuery.of(context).padding.top),
                 decoration: const BoxDecoration(
-                    color: AppColor.blueGrey,
+                    color: AppColor.gray,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(50),
                       topRight: Radius.circular(50),
@@ -150,16 +153,14 @@ class ProductDetailsScreen extends StatelessWidget {
                       controller.product.name,
                       style: Theme.of(context)
                           .textTheme
-                          .displayMedium!
-                          .copyWith(color: AppColor.white),
+                          .displayMedium
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
                           '${controller.product.price}\$',
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20)
                         ),
                         const SizedBox(
                           width: 10,
@@ -184,11 +185,14 @@ class ProductDetailsScreen extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .displayMedium!
-                          .copyWith(color: AppColor.white, fontSize: 20),
+                          .copyWith(fontSize: 20),
                     ),
                     Padding(
                         padding: const EdgeInsets.only(left: 12),
-                        child: Text(controller.product.description))
+                        child: Text(controller.product.description,style:Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(fontSize: 14)))
                   ],
                 ),
               )

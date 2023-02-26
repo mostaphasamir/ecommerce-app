@@ -1,5 +1,5 @@
 import 'package:ecommerce/controller/auth/login_screen_controller.dart';
-import 'package:ecommerce/core/constance/app_theme.dart';
+import 'package:ecommerce/core/constance/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                         child:  Center(
                           child: Text(
                             "Login",
-                            style: Theme.of(context).textTheme.displayLarge,
+                            style: Theme.of(context).textTheme.displayLarge!.copyWith(color: AppColor.white),
                           ),
                         ),
                       ),
@@ -109,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                                     hintText: "Email or Phone number",
                                     hintStyle:
                                         TextStyle(color: Colors.grey[400])),
-                                style: Theme.of(context).textTheme.displayMedium,
+                                style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColor.black),
                               ),
                             ),
                             Container(
@@ -125,6 +125,7 @@ class LoginScreen extends StatelessWidget {
                                   controller: controller.password,
                                   obscureText: controller.obscure,
                                   decoration: InputDecoration(
+
                                       suffixIcon: IconButton(
                                         icon: Icon(controller.obscure
                                             ? Icons.remove_red_eye_outlined
@@ -136,7 +137,7 @@ class LoginScreen extends StatelessWidget {
                                       border: InputBorder.none,
                                       hintText: "Password",
                                       hintStyle:TextStyle(color: Colors.grey[400])),
-                                  style: Theme.of(context).textTheme.displayMedium,
+                                  style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColor.black),
                                 ),
                               ),
                             ),

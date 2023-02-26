@@ -16,11 +16,11 @@ Widget favoriteScreenItem(
     )=> GestureDetector(
   onTap: onPressedNavigate,
   child:   Container(
-    color: AppColor.blueGreyDark,
+    color: AppColor.white,
     child: Row(
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 10,top: 10,bottom: 10),
+          padding: const EdgeInsets.only(left: 10,top: 10,bottom: 10),
           child: Image(
             image:NetworkImage(
               productModel.image,
@@ -43,14 +43,15 @@ Widget favoriteScreenItem(
                   productModel.name,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
                 const Spacer(),
-
                 Row(
                   children: [
                     Text(
-                        '${productModel.price} \$'),
+                        '${productModel.price} \$',
+                      style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14),
+                    ),
                     const SizedBox(
                       width: 5,
                     ),

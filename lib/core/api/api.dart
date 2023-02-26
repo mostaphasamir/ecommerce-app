@@ -7,11 +7,13 @@ class Api
 {
   Future<dynamic> get({required String url ,String? token,lang ='en'})async
   {
-    http.Response response =await http.get(Uri.parse(url),headers: {
+    http.Response response =await http.get(
+      Uri.parse(url),
+      headers: {
       'lang':lang,
       'Authorization':token??'',
       'Content-Type':'application/json',
-    });
+    }, );
     if(response.statusCode==200)
     {
       return jsonDecode(response.body);
@@ -21,9 +23,15 @@ class Api
       throw Exception('there is a problem with status code ${response.statusCode}');
     }
   }
+
   Future<dynamic> post({required String url,@required dynamic body,Map<String, String>? headers})async
   {
-    http.Response response=await http.post(Uri.parse(url),body :body,headers: headers);
+    http.Response response=await http.post(
+        Uri.parse(url),
+        body :body,
+      headers: headers ,
+
+    );
     if(response.statusCode==200)
     {
       Map<String,dynamic> data =jsonDecode(response.body);
@@ -48,6 +56,7 @@ class Api
       throw Exception('there is a problem with status code ${response.statusCode}');
     }
   }
-
-
 }
+
+
+

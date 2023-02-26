@@ -63,7 +63,7 @@ class LoginScreenControllerImp extends LoginScreenController
          },
        ).then((value) {
          ShopLoginModel shop = ShopLoginModel.fromJson(value);
-         if(shop.status==true)
+         if(shop.status)
            {
              myServices.sharedPreferences.setString('token', shop.data!.token);
              token = shop.data!.token ;

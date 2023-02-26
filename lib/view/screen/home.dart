@@ -16,10 +16,10 @@ class HomeScreen extends StatelessWidget {
         init: BottomNavigationControllerImp(),
         builder: (controller) => controller.isLoading
             ? const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: AppColor.primary,),
               )
             : Container(
-          color: AppColor.blueGrey,
+          color: AppColor.gray,
               child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Column(
@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.displayLarge,
                             ),
                             IconButton(
-                              icon: const Icon(Icons.search,size: 30,color: AppColor.white,),
+                              icon: const Icon(Icons.search,size: 30,color: AppColor.blueGreyDark,),
                               onPressed: () {
                                 controller.goToSearchScreen();
                               },
@@ -98,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                           (index) => GestureDetector(
                             onTap: () => controller.goToProductDetails( controller.data.data.products[index]),
                             child: Card(
-                              color: AppColor.blueGreyDark,
+                              color: AppColor.white,
                               child: SizedBox(
                                 width: double.infinity,
                                 child: Padding(
@@ -131,14 +131,15 @@ class HomeScreen extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .displayMedium!
-                                                .copyWith(color: AppColor.white),
+                                                .displayMedium,
                                           ),
                                           const Spacer(),
                                           Row(
                                             children: [
                                               Text(
-                                                  '${controller.data.data.products[index].price}\$'),
+                                                  '${controller.data.data.products[index].price}\$',
+                                                style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14),
+                                              ),
                                               const SizedBox(
                                                 width: 5,
                                               ),
@@ -175,8 +176,7 @@ class HomeScreen extends StatelessWidget {
                                                             : const Icon(
                                                                 Icons
                                                                     .favorite_border,
-                                                                color:
-                                                                    Colors.white,
+                                                                color:AppColor.black,
                                                               )),
                                               )
                                             ],
