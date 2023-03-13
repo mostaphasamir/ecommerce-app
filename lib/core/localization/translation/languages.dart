@@ -1,6 +1,7 @@
-import 'package:ecommerce/core/localization/ar.dart';
-import 'package:ecommerce/core/localization/en.dart';
 import 'package:get/get.dart';
+
+import 'ar.dart';
+import 'en.dart';
 
 class Languages extends Translations
 {

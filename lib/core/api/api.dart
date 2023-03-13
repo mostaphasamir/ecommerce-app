@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 
+import 'package:ecommerce/core/api/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
 class Api
@@ -9,12 +10,9 @@ class Api
   {
     http.Response response =await http.get(
       Uri.parse(url),
-      headers: {
-      'lang':lang,
-      'Authorization':token??'',
-      'Content-Type':'application/json',
-    }, );
-    if(response.statusCode==200)
+      headers: AppApiConstance.baseHeaders ,
+    );
+    if(response.statusCode==200||response.statusCode==201)
     {
       return jsonDecode(response.body);
     }
@@ -32,7 +30,8 @@ class Api
       headers: headers ,
 
     );
-    if(response.statusCode==200)
+    print(response.body.toString());
+    if(response.statusCode==200||response.statusCode==201)
     {
       Map<String,dynamic> data =jsonDecode(response.body);
       return data;

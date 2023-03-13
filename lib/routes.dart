@@ -9,9 +9,9 @@ import 'core/constance/app_routs.dart';
 import 'core/middleware/my_middleware.dart';
 
 List<GetPage<dynamic>>? routes = [
-  GetPage(name:AppRoutes.login , page: ()=>const LoginScreen(),middlewares:[ MyMiddleWare()]),
-  GetPage(name:AppRoutes.register , page: ()=> const RegisterScreen()),
+  GetPage(name:AppRoutes.login , page: ()=> LoginScreen(),middlewares:[ MyMiddleWare()]),
+  GetPage(name:AppRoutes.register , page: ()=>  RegisterScreen()),
   GetPage(name:AppRoutes.home , page: ()=>  const BottomNavigation()),
-  GetPage(name:AppRoutes.searchScreen , page: ()=>  const SearchScreen()),
+  GetPage(name:AppRoutes.searchScreen , page: ()=>   SearchScreen()),
   GetPage(name:AppRoutes.productDetailsScreen , page: ()=> ProductDetailsScreen(),transition:Transition.leftToRight,transitionDuration: const Duration(milliseconds:300) ),
 ];

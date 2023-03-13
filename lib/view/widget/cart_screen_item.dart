@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/bottom_navigation_controller.dart';
+import '../../controller/cart_controller.dart';
 import '../../core/constance/app_color.dart';
 import '../../data/model/home_model.dart';
 
@@ -85,7 +85,7 @@ Widget cartItem({
                     color: AppColor.black,
                     margin: const EdgeInsets.symmetric(horizontal: 2),
                     child: Center(
-                      child: GetX<BottomNavigationControllerImp>(
+                      child: GetX<CartControllerImp>(
                         builder:(controller) =>Text(
                           '${controller.quantity[cartProduct.id]}',
                           style:Theme.of(context).textTheme.displayLarge!.copyWith(

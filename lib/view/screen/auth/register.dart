@@ -6,11 +6,11 @@ import '../../../controller/auth/register_screen_controller.dart';
 import '../../../core/function/valid_input.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  RegisterScreen({super.key});
+  final RegisterScreenControllerImp controller = Get.put(RegisterScreenControllerImp());
 
   @override
   Widget build(BuildContext context) {
-    RegisterScreenControllerImp controller = Get.put(RegisterScreenControllerImp());
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -62,10 +62,10 @@ class RegisterScreen extends StatelessWidget {
                     Positioned(
                       child: Container(
                         margin: const EdgeInsets.only(top: 50),
-                        child: const Center(
+                        child:  Center(
                           child: Text(
-                            "Register",
-                            style: TextStyle(
+                            'Register'.tr,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 40,
                               fontWeight: FontWeight.bold,
@@ -108,9 +108,9 @@ class RegisterScreen extends StatelessWidget {
                                     max: 20,min: 5,type: 'text'
                                 ),
                                 controller: controller.name,
-                                decoration: const InputDecoration(
+                                decoration:  InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Your Full Name",
+                                    hintText: 'Your Full Name'.tr,
                                   ),
                               ),
                             ),
@@ -125,9 +125,9 @@ class RegisterScreen extends StatelessWidget {
                                     max: 20,min: 5,type: 'phone'
                                 ),
                                 controller: controller.phone,
-                                decoration: const InputDecoration(
+                                decoration:  InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Phone number",
+                                    hintText: 'Phone Number'.tr,
                                    ),
                               ),
                             ),
@@ -144,7 +144,7 @@ class RegisterScreen extends StatelessWidget {
                                 controller: controller.email,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Email",
+                                    hintText: "Email".tr,
                                     hintStyle:
                                     TextStyle(color: Colors.grey[400])),
                               ),
@@ -171,7 +171,7 @@ class RegisterScreen extends StatelessWidget {
                                         },
                                       ),
                                       border: InputBorder.none,
-                                      hintText: "Password",
+                                      hintText: "Password".tr,
                                       hintStyle:
                                       TextStyle(color: Colors.grey[400])),
                                 ),
@@ -182,36 +182,40 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20,),
-                    InkWell(
-                      onTap: () => controller.register(),
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: const Color.fromRGBO(143, 148, 251, 1),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Register",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                    GetBuilder<RegisterScreenControllerImp>(
+                      builder: (context) {
+                        return InkWell(
+                          onTap: () => controller.register(),
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: controller.loading ?AppColor.primary.withOpacity(.6):AppColor.primary.withOpacity(.9),
+                            ),
+                            child:  Center(
+                              child: Text(
+                                "Register".tr,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      }
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Already have an account?',style: Theme.of(context).textTheme.displayMedium,),
+                        Text("Already have an account ?".tr,style: Theme.of(context).textTheme.displayMedium,),
                         TextButton(
                           onPressed: () {
                             controller.goToLogin();
                           },
-                          child: const Text(
-                            'Login here',
-                            style: TextStyle(
+                          child:  Text(
+                            'Login here'.tr,
+                            style: const TextStyle(
                               color: Color.fromRGBO(143, 148, 251, 1),
                             ),
                           ),

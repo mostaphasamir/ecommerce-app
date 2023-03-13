@@ -1,9 +1,9 @@
 
-import 'package:ecommerce/data/model/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../core/constance/app_color.dart';
+import '../../data/model/home_model.dart';
 
 Widget favoriteScreenItem(
   {

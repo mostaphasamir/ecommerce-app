@@ -1,15 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce/controller/cart_controller.dart';
 import 'package:ecommerce/core/constance/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../controller/bottom_navigation_controller.dart';
+import '../../controller/favorite_controller.dart';
+import '../../controller/product_details_controller.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
    ProductDetailsScreen({super.key});
-  final BottomNavigationControllerImp controller = Get.put(BottomNavigationControllerImp());
+  final ProductDetailsControllerImp controller = Get.put(ProductDetailsControllerImp());
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class ProductDetailsScreen extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              controller.goBack();
+             controller.goBack();
             },
             icon: const Icon(
               Icons.arrow_back,
@@ -33,10 +34,14 @@ class ProductDetailsScreen extends StatelessWidget {
             height: 100,
             child: Row(
               children: [
-                Expanded(
+                GetBuilder<CartControllerImp>
+                  (
+                  init: CartControllerImp(),
+                  builder: (cartController) => Expanded(
                   child: InkWell(
-                    onTap: () {
-                      controller.addToCart(controller.product);
+                    onTap: ()
+                    {
+                      cartController.addToCart(controller.productModel);
                     },
                     child: Container(
                       color: AppColor.primary,
@@ -59,18 +64,23 @@ class ProductDetailsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                ),),
                 Container(
                   color: AppColor.primary,
                   margin: const EdgeInsets.only(bottom: 50, left: 2, right: 20),
-                  child: IconButton(
-                    onPressed: () {
-                      //TODO ADD to favorite
-
-                    },
-                    icon: const Icon(
-                      Icons.favorite_border,
-                      color: Colors.white,
+                  child: GetBuilder<FavoriteControllerImp>(
+                    init: FavoriteControllerImp(),
+                    builder: (favController) => IconButton(
+                      onPressed: () {
+                        favController.addOrRemoveFromFavorite(controller.productModel.id);
+                      },
+                      icon:favController.favoritesProduct[controller.productModel.id]==true?const Icon(
+                        Icons.favorite,
+                        color: Colors.red)
+                            :const Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 )
@@ -90,12 +100,12 @@ class ProductDetailsScreen extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 children: [
                   Hero(
-                    tag: controller.product.id,
+                    tag: controller.productModel.id,
                     child: PageStorage(
                       bucket: PageStorageBucket(),
                       child: CarouselSlider(
                         carouselController: controller.carouselController,
-                        items: controller.product.images.map((e) => Image(
+                        items: controller.productModel.images?.map((e) => Image(
                                   image: NetworkImage(e),
                                   width: double.infinity,
                                   fit: BoxFit.contain,
@@ -115,16 +125,16 @@ class ProductDetailsScreen extends StatelessWidget {
                           enlargeFactor: 0.3,
                           scrollDirection: Axis.horizontal,
                           onPageChanged: (index, reason) {
-                            controller.changeImageIndex(index);
+                           controller.changeImageIndex(index);
                           },
                         ),
                       ),
                     ),
                   ),
-                  GetBuilder<BottomNavigationControllerImp>(
+                  GetBuilder<ProductDetailsControllerImp>(
                     builder: (controller) => AnimatedSmoothIndicator(
                       activeIndex: controller.currentImageIndex,
-                      count: controller.product.images.length,
+                      count: controller.productModel.images!.length,
                       effect: const WormEffect(),
                     ),
                   ),
@@ -132,7 +142,7 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.only(
-                    top: 20, left: 20, right: 20, bottom: 80),
+                    top: 20, left: 20, right: 20, bottom: 100),
                 margin: const EdgeInsets.only(
                   top: 10,
                 ),
@@ -150,7 +160,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      controller.product.name,
+                      controller.productModel.name,
                       style: Theme.of(context)
                           .textTheme
                           .displayMedium
@@ -159,15 +169,15 @@ class ProductDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          '${controller.product.price}\$',
+                          '${controller.productModel.price}\$',
                           style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20)
                         ),
                         const SizedBox(
                           width: 10,
                         ),
-                        controller.product.discount != 0
+                        controller.productModel.discount != 0
                             ? Text(
-                                '${controller.product.oldPrice}\$',
+                                '${controller.productModel.oldPrice}\$',
                                 style: const TextStyle(
                                   decoration: TextDecoration.lineThrough,
                                   color: Colors.red,
@@ -189,7 +199,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     ),
                     Padding(
                         padding: const EdgeInsets.only(left: 12),
-                        child: Text(controller.product.description,style:Theme.of(context)
+                        child: Text(controller.productModel.description,style:Theme.of(context)
                             .textTheme
                             .displayMedium!
                             .copyWith(fontSize: 14)))

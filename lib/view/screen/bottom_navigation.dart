@@ -20,26 +20,26 @@ class BottomNavigation extends StatelessWidget {
           unselectedItemColor: AppColor.black,
           backgroundColor: Colors.white,
           elevation: 10,
-          items: const [
+          items:  [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: 'Home',
-              activeIcon: Icon(Icons.home),
+              icon: const Icon(Icons.home_outlined),
+              label: 'Home'.tr,
+              activeIcon: const Icon(Icons.home),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border_outlined),
-              label: 'Favorite',
-              activeIcon:  Icon(Icons.favorite),
+              icon: const Icon(Icons.favorite_border_outlined),
+              label: 'Favorite'.tr,
+              activeIcon:  const Icon(Icons.favorite),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined ),
-              label: 'Cart',
-              activeIcon: Icon(Icons.shopping_cart),
+              icon: const Icon(Icons.shopping_cart_outlined ),
+              label: 'Cart'.tr,
+              activeIcon: const Icon(Icons.shopping_cart),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined),
-              label: 'Account',
-              activeIcon: Icon(Icons.account_circle),
+              icon: const Icon(Icons.account_circle_outlined),
+              label: 'Account'.tr,
+              activeIcon: const Icon(Icons.account_circle),
             ),
           ],
           onTap:(value) {

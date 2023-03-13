@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import '../../../core/function/valid_input.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+  final LoginScreenControllerImp controller = Get.put(LoginScreenControllerImp());
 
   @override
   Widget build(BuildContext context) {
-    LoginScreenControllerImp controller = Get.put(LoginScreenControllerImp());
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -64,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 50),
                         child:  Center(
                           child: Text(
-                            "Login",
+                            "Login".tr,
                             style: Theme.of(context).textTheme.displayLarge!.copyWith(color: AppColor.white),
                           ),
                         ),
@@ -106,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                                 controller: controller.email,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Email or Phone number",
+                                    hintText: 'Email Or Phone Number'.tr,
                                     hintStyle:
                                         TextStyle(color: Colors.grey[400])),
                                 style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColor.black),
@@ -125,7 +125,7 @@ class LoginScreen extends StatelessWidget {
                                   controller: controller.password,
                                   obscureText: controller.obscure,
                                   decoration: InputDecoration(
-
+                                    errorText: controller.errorPass?'Password Wrong'.tr:null,
                                       suffixIcon: IconButton(
                                         icon: Icon(controller.obscure
                                             ? Icons.remove_red_eye_outlined
@@ -135,7 +135,7 @@ class LoginScreen extends StatelessWidget {
                                         },
                                       ),
                                       border: InputBorder.none,
-                                      hintText: "Password",
+                                      hintText: "Password".tr,
                                       hintStyle:TextStyle(color: Colors.grey[400])),
                                   style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColor.black),
                                 ),
@@ -149,47 +149,47 @@ class LoginScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
-                          child: const Text(
-                            "Forgot Password?",
-                            style: TextStyle(
-                              color: Color.fromRGBO(143, 148, 251, 1),
+                          child: Text(
+                            'Forgot Password?'.tr,
+                            style: const TextStyle(
+                              color: AppColor.primary,
                             ),
                           ),
                           onPressed: () {},
                         ),
                       ],
                     ),
-                    InkWell(
-                      onTap: () => controller.login(),
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: const Color.fromRGBO(143, 148, 251, 1),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                   GetBuilder<LoginScreenControllerImp>(builder: (controller) =>InkWell(
+                     onTap: () => controller.login(),
+                     child: Container(
+                       height: 50,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         color:controller.loading ?AppColor.primary.withOpacity(.6):AppColor.primary.withOpacity(.9),
+                       ),
+                       child:  Center(
+                         child: Text(
+                           "Login".tr,
+                           style: const TextStyle(
+                             color: Colors.white,
+                             fontWeight: FontWeight.bold,
+                           ),
+                         ),
+                       ),
+                     ),
+                   ) ,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Don\'t have an account?',style: Theme.of(context).textTheme.displayMedium),
+                        Text("Don't have an account?".tr,style: Theme.of(context).textTheme.displayMedium),
                         TextButton(
                           onPressed: () {
                             controller.goToRegisterScreen();
                           },
-                          child: const Text(
-                            'SignUp here',
-                            style: TextStyle(
-                              color: Color.fromRGBO(143, 148, 251, 1),
+                          child:  Text(
+                            'SignUp here'.tr,
+                            style:const TextStyle(
+                              color: AppColor.primary,
                             ),
                           ),
                         )

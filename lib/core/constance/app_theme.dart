@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../localization/change_local.dart';
 import 'app_color.dart';
 
 class AppTheme {
-
+  LocalController controller = Get.put(LocalController());
   static ThemeData customLightTheme=ThemeData.light().copyWith(
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColor.gray,
@@ -14,7 +16,7 @@ class AppTheme {
       fillColor: AppColor.black,
     ),
     primaryColor: AppColor.primary,
-    textTheme: AppFontTheme.appFontEnglishTheme,
+    textTheme:AppFontTheme.appFontEnglishTheme,
   );
   static ThemeData customDarkTheme=ThemeData.dark().copyWith();
 

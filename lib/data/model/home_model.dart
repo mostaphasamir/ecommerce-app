@@ -48,9 +48,9 @@ class ProductModel {
   final String image;
   final String name ;
   final String description ;
-  final List<dynamic> images ;
-  final bool inFavorites ;
-  final bool inCart ;
+  final List<dynamic>? images ;
+  final bool? inFavorites ;
+  final bool? inCart ;
 
   ProductModel({
     required this.id,

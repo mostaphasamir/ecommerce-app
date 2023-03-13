@@ -9,7 +9,7 @@ import '../../core/service/services.dart';
 
 abstract class LoginScreenController extends GetxController
 {
-  void isLogin();
+  void isLoading(bool value);
   void isObscure();
   login();
   goToRegisterScreen();
@@ -17,8 +17,9 @@ abstract class LoginScreenController extends GetxController
 
 class LoginScreenControllerImp extends LoginScreenController
 {
-  bool loading =false ;
+  bool loading =false;
   bool obscure =true ;
+  bool errorPass =false ;
   late TextEditingController email ;
   late TextEditingController password ;
   late GlobalKey<FormState> globalKey ;
@@ -37,8 +38,8 @@ class LoginScreenControllerImp extends LoginScreenController
   }
 
   @override
-  void isLogin() {
-    loading =!loading ;
+  void isLoading(bool value) {
+    loading= value ;
     update();
   }
 
@@ -50,18 +51,19 @@ class LoginScreenControllerImp extends LoginScreenController
 
   @override
   login() {
-
    if(globalKey.currentState!.validate())
      {
-       _api.post(url: "https://student.valuxapps.com/api/login", body:
+       isLoading(true);
+       _api.post(url: AppApiConstance.loginURL, body:
         {
          'email':email.text,
           'password':password.text
         },
          headers:{
-         'lang':'ar',
+         'lang':'en',
          },
        ).then((value) {
+         print(value.toString());
          ShopLoginModel shop = ShopLoginModel.fromJson(value);
          if(shop.status)
            {
@@ -69,6 +71,11 @@ class LoginScreenControllerImp extends LoginScreenController
              token = shop.data!.token ;
              Get.offAllNamed(AppRoutes.home);
            }
+         else
+           {
+             errorPass=true;
+           }
+         isLoading(false);
        }
        );
      }

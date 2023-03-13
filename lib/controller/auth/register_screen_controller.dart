@@ -10,6 +10,7 @@ import '../../data/model/shop_login_model.dart';
 abstract class RegisterScreenController extends GetxController
 {
   isObscure();
+  void isLoading();
   register();
   goToLogin();
 }
@@ -25,6 +26,7 @@ class RegisterScreenControllerImp extends RegisterScreenController
   late TextEditingController password ;
 
   bool obscure =true ;
+  bool loading =false ;
   final Api _api =Api() ;
 
   MyServices myServices=Get.find();
@@ -76,5 +78,11 @@ class RegisterScreenControllerImp extends RegisterScreenController
     password.dispose();
     name.dispose();
     super.dispose();
+  }
+
+  @override
+  void isLoading() {
+    loading =! loading ;
+    update();
   }
 }
