@@ -30,8 +30,7 @@ Widget cartItem({
       const SizedBox(
         width: 10,
       ),
-      Container(
-          padding: const EdgeInsets.only(top: 10,),
+      SizedBox(
           height: 100,
           width: Get.width*0.4,
           child: Column(
@@ -57,7 +56,7 @@ Widget cartItem({
                     style: const TextStyle(
                       decoration: TextDecoration.lineThrough,
                       color: Colors.red,
-                      fontSize: 9,
+                      fontSize: 10,
                     ),
                   ) : const Text(''),
                 ],
@@ -75,7 +74,7 @@ Widget cartItem({
                       shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.zero
                       ),
-                      child: const Icon(Icons.remove),
+                      child:Icon(Icons.remove ,color: AppColor.white),
 
                     ),
                   ),
@@ -105,7 +104,7 @@ Widget cartItem({
                       shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.zero
                       ),
-                      child: const Icon(Icons.add),
+                      child: const Icon(Icons.add,color: AppColor.white),
 
                     ),
                   ),

@@ -17,6 +17,9 @@ class En{
     "Already have an account ?":"Already have an account ?",
     'Login here':'Login here',
 
+    'This phone has been used before' : 'This phone has been used before',
+    'This Email is Used Before':'This Email is Used Before',
+
     //bottom nav bar
     'Home':'Home',
     'Favorite':'Favorite',
@@ -43,5 +46,9 @@ class En{
     'change language':'change language',
     'dark theme':'dark theme' ,
     'Logout':'Logout',
+
+    //details
+    "Description :":"Description :",
+    "Add TO Cart":"Add TO Cart",
   };
 }

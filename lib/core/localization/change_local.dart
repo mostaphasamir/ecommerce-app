@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../api/constance.dart';
+import '../constance/app_theme.dart';
 import '../service/services.dart';
 
 
 class LocalController extends GetxController
 {
   MyServices services=Get.find();
-  Locale? local ;
+  late Locale local ;
   ThemeData themeData = ThemeData();
-  TextTheme textTheme = const TextTheme();
    changeLang()
   {
     if(local==const Locale('ar'))
@@ -18,14 +18,14 @@ class LocalController extends GetxController
         local=const Locale('en');
         services.sharedPreferences.setString('lang', 'en');
         AppApiConstance.baseHeaders.update('lang', (value) => 'en');
-        Get.updateLocale(local!);
+        Get.updateLocale(local);
       }
     else
       {
         local=const Locale('ar');
         services.sharedPreferences.setString('lang', 'ar');
        AppApiConstance.baseHeaders.update('lang', (value) => 'ar');
-        Get.updateLocale(local!);
+        Get.updateLocale(local);
       }
   }
 
@@ -34,12 +34,12 @@ class LocalController extends GetxController
     if(Get.isDarkMode)
       {
         services.sharedPreferences.setString('mode', 'light');
-        Get.changeThemeMode(ThemeMode.light);
+        Get.changeTheme(AppTheme.customLightTheme);
       }
     else
       {
         services.sharedPreferences.setString('mode', 'dark');
-        Get.changeThemeMode(ThemeMode.dark);
+        Get.changeTheme(AppTheme.customDarkTheme);
       }
   }
   @override
@@ -50,28 +50,27 @@ class LocalController extends GetxController
     if(sharedPrefLang=='ar')
     {
       local=const Locale('ar');
+      AppApiConstance.baseHeaders.update('lang', (value) => 'ar');
     }
-    else if (sharedPrefLang=='en')
+    else if (sharedPrefLang =='en')
     {
       local=const Locale('en');
+      AppApiConstance.baseHeaders.update('lang', (value) => 'en');
     }
     else
     {
-      local=const Locale('ar');
-      local=Locale(Get.deviceLocale!.languageCode);
+      var deviceLanguage = Get.deviceLocale!.languageCode ;
+      local=Locale(deviceLanguage);
+      AppApiConstance.baseHeaders.update('lang', (value) => deviceLanguage);
     }
-    if(sharedPrefMode=='light')
-      {
-        Get.changeThemeMode(ThemeMode.light);
-      }
-    else if (sharedPrefMode=='dark')
-      {
-        Get.changeThemeMode(ThemeMode.dark);
-      }
-    else
-      {
-        Get.changeThemeMode(ThemeMode.light);
-      }
+
+    if(sharedPrefMode=='dark')
+    {
+      Get.changeTheme(AppTheme.customDarkTheme);
+    }
+    else{
+      Get.changeTheme(AppTheme.customLightTheme);
+    }
     super.onInit();
   }
 }

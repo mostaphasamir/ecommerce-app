@@ -39,3 +39,13 @@ class AppWidth {
   static double w30 = 30.w;
   static double w100 = 100.w;
 }
+
+class AppFontSize {
+  static double fs12 = 12.sp ;
+  static double fs13 = 13.sp ;
+  static double fs16 = 16.sp ;
+  static double fs30 = 30.sp ;
+  static double fs40 = 40.sp ;
+
+}
+

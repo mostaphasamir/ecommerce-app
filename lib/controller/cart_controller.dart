@@ -7,8 +7,7 @@ import '../core/constance/app_color.dart';
 import '../data/model/cart_model.dart';
 import '../data/model/home_model.dart';
 
-abstract class CartController extends GetxController
-{
+abstract class CartController extends GetxController {
   getCartProduct();
   addToCart(ProductModel model);
   incrementQuantity(int id);
@@ -17,128 +16,115 @@ abstract class CartController extends GetxController
   checkOutCalc();
   checkProduct(ProductModel model);
 }
-class CartControllerImp extends CartController
-{
-  late CartModel cartDate ;
-  var cartProduct = [].obs ;
-  var quantity  = {}.obs;
-  RxDouble total = 0.0.obs  ;
-  Api api = Api();
- bool isLoading=false;
 
- @override
+class CartControllerImp extends CartController {
+  late CartModel cartDate;
+
+  var cartProduct = [].obs;
+
+  var quantity = {}.obs;
+  RxDouble total = 0.0.obs;
+
+  Api api = Api();
+  bool isLoading = false;
+
+  @override
   void onInit() {
-    isLoading=true;
+    isLoading = true;
     getCartProduct();
     super.onInit();
   }
 
   @override
-  getCartProduct()
-  {
-    api.get(url: AppApiConstance.cartURl,token: token).then((value) {
-      cartDate =CartModel.fromJson(value);
-      for (var element in cartDate.data.cartItems)
-      {
-        cartProduct.add(element.product);
-        quantity[element.product.id.toInt()]=element.quantity.toInt() ;
+  getCartProduct() {
+    api.get(url: AppApiConstance.cartURl, headers: AppApiConstance.baseHeaders)
+        .then((value) {
+      cartDate = CartModel.fromJson(value);
+      if (cartDate.data?.cartItems != null) {
+        for (var element in cartDate.data!.cartItems) {
+          cartProduct.add(element.product);
+          quantity[element.product.id.toInt()] = element.quantity.toInt();
+        }
       }
-    }).then( (value) {
-      checkOutCalc();
-      isLoading=false;
-    },);
+    }).then(
+      (value) {
+        checkOutCalc();
+        isLoading = false;
+        update();
+      },
+    );
   }
 
   @override
-  removeFromCart(ProductModel model)
-  {
+  removeFromCart(ProductModel model) {
     cartProduct.remove(model);
     checkOutCalc();
-    api.post(url: AppApiConstance.cartURl,
-        body: {
-          "product_id": model.id.toString(),
-        },
-        headers: {
-          'lang':'en',
-          'Authorization':token,
-        }
-    ).catchError((e)=>printError(info: e.toString()));
+    api.post(url: AppApiConstance.cartURl, body: {
+      "product_id": model.id.toString(),
+    }, headers: {
+      'lang': 'en',
+      'Authorization': token,
+    }).catchError((e){
+      Get.snackbar("Error", e.toString());
+      return {'error':e.toString()} ;
+    });
   }
 
-
   @override
-  incrementQuantity(int id)
-  {
-    quantity[id.toInt()]++ ;
+  incrementQuantity(int id) {
+    quantity[id.toInt()]++;
     checkOutCalc();
   }
 
-
   @override
-  decrementQuantity(int id)
-  {
-    quantity[id.toInt()]<=1 ? Null :quantity[id.toInt()]-- ;
+  decrementQuantity(int id) {
+    quantity[id.toInt()] <= 1 ? Null : quantity[id.toInt()]--;
     checkOutCalc();
   }
 
-
   @override
-  checkOutCalc()
-  {
-    total.value = 0 ;
-    for(ProductModel item in cartProduct)
-    {
+  checkOutCalc() {
+    total.value = 0;
+    for (ProductModel item in cartProduct) {
       total.value += item.price * quantity[item.id.toInt()];
     }
   }
 
-
   @override
-  addToCart(ProductModel model)
-  {
-    if(checkProduct(model))
-    {
-      quantity[model.id.toInt()]++ ;
-    }
-    else
-    {
-      quantity[model.id]=1;
-      api.post(url: AppApiConstance.cartURl,
-          body: {
-            "product_id": model.id.toString(),
-          },
-          headers: {
-            'lang':'en',
-            'Authorization':token,
-          }
-      ).then((value) {
-        if(value['status'])
-        {
+  addToCart(ProductModel model) {
+    if (checkProduct(model)) {
+      quantity[model.id.toInt()]++;
+    } else {
+      quantity[model.id] = 1;
+      api.post(url: AppApiConstance.cartURl, body: {
+        "product_id": model.id.toString(),
+      }, headers: {
+        'lang': 'en',
+        'Authorization': token,
+      }).then((value) {
+        if (value['status']) {
           Fluttertoast.showToast(
             msg: "Item added to cart successfully.",
             toastLength: Toast.LENGTH_SHORT,
             textColor: AppColor.white,
-            backgroundColor: AppColor.blueGreyVeryDark ,
+            backgroundColor: AppColor.blueGreyVeryDark,
             gravity: ToastGravity.BOTTOM,
           );
         }
         // ignore: invalid_return_type_for_catch_error
-      }).catchError((e)=>Get.snackbar('Error', e.toString()));
+      }).catchError((e) => Get.snackbar('Error', e.toString()));
       cartProduct.add(model);
     }
-    checkOutCalc() ;
+    checkOutCalc();
   }
 
-
   @override
-  checkProduct(ProductModel model)
-  {
-    for(ProductModel element in cartProduct){
-      if (element.id==model.id)
-      {
-        return true ;
+  checkProduct(ProductModel model) {
+    for (ProductModel element in cartProduct) {
+      if (element.id == model.id) {
+        return true;
       }
     }
-    return false ;
+    return false;
   }
 }

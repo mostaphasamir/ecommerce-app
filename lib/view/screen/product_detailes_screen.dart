@@ -29,62 +29,66 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          SizedBox(
-            width: Get.width,
-            height: 100,
-            child: Row(
-              children: [
-                GetBuilder<CartControllerImp>
-                  (
-                  init: CartControllerImp(),
-                  builder: (cartController) => Expanded(
-                  child: InkWell(
-                    onTap: ()
-                    {
-                      cartController.addToCart(controller.productModel);
-                    },
-                    child: Container(
-                      color: AppColor.primary,
-                      margin: const EdgeInsets.only(
-                          bottom: 50, left: 20, right: 10),
-                      width: double.infinity,
-                      height: 50,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text("Add TO Cart"),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Icon(
-                            Icons.shopping_cart,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),),
-                Container(
-                  color: AppColor.primary,
-                  margin: const EdgeInsets.only(bottom: 50, left: 2, right: 20),
-                  child: GetBuilder<FavoriteControllerImp>(
-                    init: FavoriteControllerImp(),
-                    builder: (favController) => IconButton(
-                      onPressed: () {
-                        favController.addOrRemoveFromFavorite(controller.productModel.id);
+          Padding(
+            padding: const EdgeInsets.only(left: 20,right: 20),
+            child: SizedBox(
+              //width: Get.width,
+              height: 100,
+              child: Row(
+                children: [
+                  GetBuilder<CartControllerImp>
+                    (
+                    init: CartControllerImp(),
+                    builder: (cartController) => Expanded(
+                    child: InkWell(
+                      onTap: ()
+                      {
+                        cartController.addToCart(controller.productModel);
                       },
-                      icon:favController.favoritesProduct[controller.productModel.id]==true?const Icon(
-                        Icons.favorite,
-                        color: Colors.red)
-                            :const Icon(
-                        Icons.favorite_border,
-                        color: Colors.white,
+                      child: Container(
+                        color: Theme.of(context).primaryColor,
+                        margin: const EdgeInsets.only(
+                            bottom: 50,),
+                        width: double.infinity,
+                        height: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Add TO Cart".tr,style: Theme.of(context).textTheme.titleSmall),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            const Icon(
+                              Icons.shopping_cart,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),),
+                  const SizedBox(width: 10,),
+                  Container(
+                    color: Theme.of(context).primaryColor,
+                    margin: const EdgeInsets.only(bottom: 50,),
+                    child: GetBuilder<FavoriteControllerImp>(
+                      init: FavoriteControllerImp(),
+                      builder: (favController) => IconButton(
+                        onPressed: () {
+                          favController.addOrRemoveFromFavorite(controller.productModel.id);
+                        },
+                        icon:favController.favoritesProduct[controller.productModel.id]==true?const Icon(
+                          Icons.favorite,
+                          color: Colors.red)
+                              :const Icon(
+                          Icons.favorite_border,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 20,),
@@ -150,9 +154,9 @@ class ProductDetailsScreen extends StatelessWidget {
                 constraints: BoxConstraints(
                     minHeight:
                         Get.height - 310 - MediaQuery.of(context).padding.top),
-                decoration: const BoxDecoration(
-                    color: AppColor.gray,
-                    borderRadius: BorderRadius.only(
+                decoration:  BoxDecoration(
+                    color: Theme.of(context).colorScheme.background,
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(50),
                       topRight: Radius.circular(50),
                     )),
@@ -191,7 +195,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       color: AppColor.white,
                     ),
                     Text(
-                      "Description :",
+                      "Description :".tr,
                       style: Theme.of(context)
                           .textTheme
                           .displayMedium!

@@ -43,14 +43,14 @@ Widget favoriteScreenItem(
                   productModel.name,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  style: Theme.of(context).textTheme.displayMedium,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const Spacer(),
                 Row(
                   children: [
                     Text(
                         '${productModel.price} \$',
-                      style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14),
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                     const SizedBox(
                       width: 5,

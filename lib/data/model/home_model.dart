@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class HomeModel{
   final bool status ;
   final HomeDataModel data ;
@@ -13,8 +15,8 @@ class HomeModel{
 
 
 class HomeDataModel {
-  List<BannerModel> banners=[];
-  List<ProductModel> products=[];
+  List<BannerModel> banners=<BannerModel> [].obs;
+  List<ProductModel> products=<ProductModel>[].obs;
 
   HomeDataModel({required this.banners, required this.products});
    HomeDataModel.fromJson(Map<String, dynamic> jsonData) {

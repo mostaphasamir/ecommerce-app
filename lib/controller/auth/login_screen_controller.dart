@@ -51,6 +51,7 @@ class LoginScreenControllerImp extends LoginScreenController
 
   @override
   login() {
+
    if(globalKey.currentState!.validate())
      {
        isLoading(true);
@@ -63,12 +64,12 @@ class LoginScreenControllerImp extends LoginScreenController
          'lang':'en',
          },
        ).then((value) {
-         print(value.toString());
          ShopLoginModel shop = ShopLoginModel.fromJson(value);
          if(shop.status)
            {
              myServices.sharedPreferences.setString('token', shop.data!.token);
-             token = shop.data!.token ;
+             token = shop.data!.token;
+             AppApiConstance.baseHeaders.update("Authorization", (value) => token);
              Get.offAllNamed(AppRoutes.home);
            }
          else

@@ -16,6 +16,7 @@ class MyMiddleWare extends GetMiddleware
   RouteSettings?  redirect(String? route) {
     if(myServices.sharedPreferences.getString('token')!=null){
       token = myServices.sharedPreferences.getString('token')!;
+      AppApiConstance.baseHeaders.update('Authorization', (value) => token);
       return const RouteSettings(name: AppRoutes.home);
     }
     return null;

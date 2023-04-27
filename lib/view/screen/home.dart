@@ -10,18 +10,19 @@ import '../../core/api/constance.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  final HomeControllerImp controller = Get.put(HomeControllerImp(),permanent:true );
+  final FavoriteControllerImp favController = Get.find();
+  final HomeControllerImp  controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: GetBuilder<HomeControllerImp>(
+      child: GetX<HomeControllerImp>(
         builder: (controller) =>
-        controller.isLoading?
-        const Center(
-          child: CircularProgressIndicator(color: AppColor.primary,),
+        controller.isLoading.value?
+          Center(
+          child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
         )
             :Container(
-          color: AppColor.gray,
+          color: Theme.of(context).colorScheme.background,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
@@ -32,13 +33,13 @@ class HomeScreen extends StatelessWidget {
                   height: 10,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Offers'.tr,
-                        style: Theme.of(context).textTheme.displayLarge,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       IconButton(
                         icon: const Icon(Icons.search,size: 30,color: AppColor.blueGreyDark,),
@@ -83,10 +84,10 @@ class HomeScreen extends StatelessWidget {
                   height: 5,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
+                  padding: const EdgeInsets.only(left: 12.0,right: 12.0),
                   child: Text(
                       'Product'.tr,
-                      style: Theme.of(context).textTheme.displayLarge),
+                      style: Theme.of(context).textTheme.titleLarge),
                 ),
                 AnimatedGridView(
                   padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -94,15 +95,15 @@ class HomeScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   duration: 100,
                   crossAxisCount: 2,
-                  mainAxisExtent: 265,
+                  mainAxisExtent: 278,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                   children: List.generate(
                     controller.data.data.products.length,
                         (index) => GestureDetector(
-                      onTap: () => controller.goToProductDetails( controller.data.data.products[index]),
+                      onTap: () =>controller.goToProductDetails( controller.data.data.products[index]),
                       child: Card(
-                        color: AppColor.white,
+                        color: Theme.of(context).colorScheme.primary,
                         child: SizedBox(
                           width: double.infinity,
                           child: Padding(
@@ -128,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 10,
+                                      height: 8,
                                     ),
                                     Text(
                                       controller.data.data.products[index].name,
@@ -136,14 +137,14 @@ class HomeScreen extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .displayMedium,
+                                          .bodyMedium,
                                     ),
                                     const Spacer(),
                                     Row(
                                       children: [
                                         Text(
                                           '${controller.data.data.products[index].price}\$',
-                                          style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14),
+                                          style: Theme.of(context).textTheme.displaySmall,
                                         ),
                                         const SizedBox(
                                           width: 5,
@@ -158,7 +159,7 @@ class HomeScreen extends StatelessWidget {
                                         ) : const Text(''),
                                         const Spacer(),
                                         GetBuilder<FavoriteControllerImp>(
-                                          init: FavoriteControllerImp(),
+                                          // init: FavoriteControllerImp(),
                                           builder: (favController) =>
                                               IconButton(
                                                   onPressed: (){

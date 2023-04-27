@@ -8,12 +8,12 @@ class CartModel {
   });
   late final bool status;
   late final String ? message;
-  late final Data data;
+  late final Data? data;
 
   CartModel.fromJson(Map<String, dynamic> json){
     status = json['status'];
-    message =  json['message']==null?null:json['message'];
-    data = Data.fromJson(json['data']);
+    message =  json['message'];
+    data =json['data']!=null? Data.fromJson(json['data']):null;
   }
 }
 

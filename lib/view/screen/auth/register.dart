@@ -62,14 +62,13 @@ class RegisterScreen extends StatelessWidget {
                     Positioned(
                       child: Container(
                         margin: const EdgeInsets.only(top: 50),
-                        child:  Center(
-                          child: Text(
-                            'Register'.tr,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        alignment: Alignment.center,
+                        child:  Text(
+                          'Register'.tr,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -119,16 +118,19 @@ class RegisterScreen extends StatelessWidget {
                               decoration: const BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(color: Colors.grey))),
-                              child: TextFormField(
-                                validator: (value) => validInput(
-                                    val: value! ,
-                                    max: 20,min: 5,type: 'phone'
+                              child: GetBuilder<RegisterScreenControllerImp>(
+                                builder: (controller) => TextFormField(
+                                  validator: (value) => validInput(
+                                      val: value! ,
+                                      max: 20,min: 5,type: 'phone'
+                                  ),
+                                  controller: controller.phone,
+                                  decoration:  InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Phone Number'.tr,
+                                      errorText: controller.numberUsed ? 'This phone has been used before'.tr:null
+                                  ),
                                 ),
-                                controller: controller.phone,
-                                decoration:  InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Phone Number'.tr,
-                                   ),
                               ),
                             ),
                             Container(
@@ -136,17 +138,19 @@ class RegisterScreen extends StatelessWidget {
                               decoration: const BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(color: Colors.grey))),
-                              child: TextFormField(
-                                validator: (value) => validInput(
-                                    val: value! ,
-                                    max: 50,min: 5,type: 'email'
-                                ),
-                                controller: controller.email,
-                                decoration: InputDecoration(
+                              child: GetBuilder<RegisterScreenControllerImp>(
+                                builder: (controller) => TextFormField(
+                                  validator: (value) => validInput(
+                                      val: value! ,
+                                      max: 50,min: 5,type: 'email'
+                                  ),
+                                  controller: controller.email,
+                                  decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: "Email".tr,
-                                    hintStyle:
-                                    TextStyle(color: Colors.grey[400])),
+                                    errorText:controller.emailUsed?'This Email is Used Before'.tr:null,
+                                  ),
+                                ),
                               ),
                             ),
                             Container(
@@ -172,8 +176,7 @@ class RegisterScreen extends StatelessWidget {
                                       ),
                                       border: InputBorder.none,
                                       hintText: "Password".tr,
-                                      hintStyle:
-                                      TextStyle(color: Colors.grey[400])),
+                                  ),
                                 ),
                               ),
                             ),
@@ -182,23 +185,22 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20,),
-                    GetBuilder<RegisterScreenControllerImp>(
+                    GetX<RegisterScreenControllerImp>(
                       builder: (context) {
-                        return InkWell(
-                          onTap: () => controller.register(),
+                        return GestureDetector(
+                          onTap: () { controller.register() ;} ,
                           child: Container(
                             height: 50,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: controller.loading ?AppColor.primary.withOpacity(.6):AppColor.primary.withOpacity(.9),
+                              color: controller.isLoading.value ?AppColor.primary.withOpacity(.6):AppColor.primary.withOpacity(.9),
                             ),
-                            child:  Center(
-                              child: Text(
-                                "Register".tr,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            alignment: Alignment.center,
+                            child:  Text(
+                              "Register".tr,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),

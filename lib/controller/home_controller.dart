@@ -15,20 +15,19 @@ abstract class HomeController extends GetxController
 class HomeControllerImp extends HomeController
 {
   late HomeModel data;
-  bool isLoading = false;
+  RxBool isLoading = false.obs;
   Api api =Api();
-
 
   @override
   getData()
   {
-    api.get(url: AppApiConstance.homeURl,token: token).then((value) {
-      data =HomeModel.fromJson(value);
-      isLoading=false;
-      update();
+    api.get(url: AppApiConstance.homeURl,headers: AppApiConstance.baseHeaders).then((value){
+      data =HomeModel.fromJson(value) ;
+      isLoading(false);
+    }).catchError((e){
+      Get.snackbar("something Wrong", e.toString());
+
     });
-
-
   }
 
   @override
@@ -48,10 +47,10 @@ class HomeControllerImp extends HomeController
 
   @override
   void onInit() {
-    isLoading=true;
-    update();
+    isLoading(true);
     getData();
     super.onInit();
   }
+
 }
 

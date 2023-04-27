@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import 'package:flutter/services.dart';
 import 'core/constance/app_routs.dart';
 import 'core/localization/change_local.dart';
 import 'core/localization/translation/languages.dart';
@@ -13,7 +14,11 @@ import 'core/service/services.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await initServices() ;
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+      .then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

@@ -1,6 +1,6 @@
 class Ar {
   static Map<String, String> json = {
-
+    //login
     'Login':'تسجيل دخول',
     'Email Or Phone Number':'البريد الالكتروني او رقم الهاتف',
     'Password':'كلمة السر',
@@ -16,6 +16,9 @@ class Ar {
     'Email':'البريد الالكتروني',
     "Already have an account ?":"لديك حساب ؟",
     'Login here':"سجل الدخول هنا",
+
+    'This phone has been used before' : 'هذا الرقم مستخدم من قبل',
+    'This Email is Used Before':"هذا البريد الالكتروني مستخدم من قبل",
 
 
     //bottom nav bar
@@ -45,5 +48,9 @@ class Ar {
     'change language':'تغيير اللغة',
     'dark theme':'الوضع المظلم' ,
     'Logout':'تسجيل الخروج',
+
+    //details
+    "Description :":"الوصف :",
+    "Add TO Cart":"اضافة الي عربة التسوق",
   };
 }

@@ -11,7 +11,8 @@ abstract class ProfileController extends GetxController
 {
   getProfileData();
   logout();
-  changeTheme(bool value);
+  changeTheme();
+  goToUpdateProfile(ShopLoginModel userData);
 }
 class ProfileControllerImp extends ProfileController
 {
@@ -19,27 +20,33 @@ class ProfileControllerImp extends ProfileController
 
   MyServices myServices=Get.find();
   final LocalController localController=Get.find();
-
+  bool isDarkTheme = false ;
   Api api =Api();
   bool isLoading=false ;
   bool darkTheme=false ;
 
   @override
-  getProfileData()
+  getProfileData() async
   {
-    api.get(url: AppApiConstance.profileURl,token: token).then((value) {
-      userData = ShopLoginModel.fromJson(value);
-      isLoading=false;
-    });
+    try {
+      Map<String, dynamic> data = await api.get(
+          url: AppApiConstance.profileURl,
+          headers: AppApiConstance.baseHeaders
+      );
+      userData = ShopLoginModel.fromJson(data);
+      isLoading = false;
+      update();
+    } catch(e)
+    {
+      Get.snackbar("something Wrong", e.toString());
+    }
   }
 
 
   @override
-  changeTheme(bool value)
+  changeTheme()
   {
-    darkTheme =value ;
     localController.changeTheme();
-    update();
   }
 
 
@@ -51,11 +58,18 @@ class ProfileControllerImp extends ProfileController
     Get.offAllNamed(AppRoutes.login);
   }
 
+  @override
+  goToUpdateProfile(ShopLoginModel userData){
+    Get.toNamed(AppRoutes.updateProfile);
+  }
+
+
 
   @override
   void onInit() {
     isLoading=true;
     getProfileData();
+    isDarkTheme = Get.isDarkMode;
     super.onInit();
   }
 }

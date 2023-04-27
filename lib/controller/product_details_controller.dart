@@ -1,9 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:ecommerce/controller/favorite_controller.dart';
 import 'package:get/get.dart';
 
 import '../data/model/home_model.dart';
-import 'cart_controller.dart';
 
 abstract class ProductDetailsController extends GetxController
 {

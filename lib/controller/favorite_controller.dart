@@ -7,80 +7,77 @@ import '../data/model/favorite_model.dart';
 import '../data/model/home_model.dart';
 import 'home_controller.dart';
 
-abstract class FavoriteController extends GetxController
-{getFavoriteProduct();
-goToProductDetails(ProductModel product);
+abstract class FavoriteController extends GetxController {
+  getFavoriteProduct();
+
+  goToProductDetails(ProductModel product);
 }
-class FavoriteControllerImp extends FavoriteController
-{
 
-  final homeController = Get.put(HomeControllerImp());
-  List<ProductModel> favoriteScreenProduct =<ProductModel> [].obs ;
+class FavoriteControllerImp extends FavoriteController {
+  final HomeControllerImp homeController = Get.put(HomeControllerImp());
+
+  List<ProductModel> favoriteScreenProduct = <ProductModel>[].obs;
+
   bool isLoading = false;
-  final Map<int,bool > favoritesProduct={};
+  final Map<int, bool> favoritesProduct = {};
   late FavoriteModel favoriteData;
-  Api api =Api();
-
+  Api api = Api();
 
   @override
-  getFavoriteProduct()
-  {
-    api.get(url: AppApiConstance.favoritesURl,token: token)
-        .then((value) {
+  getFavoriteProduct() async {
+    api.get(
+            url: AppApiConstance.favoritesURl,
+            headers: AppApiConstance.baseHeaders
+    ).then((value) {
       favoriteData = FavoriteModel.fromJson(value);
-      if(favoriteData.data.data.isNotEmpty)
-        {
-          for (var element in favoriteData.data.data) {
-            favoritesProduct[element.product.id]=true;
-            favoriteScreenProduct.add(element.product);
-          }
+      if (favoriteData.data?.data != null) {
+        for (var element in favoriteData.data!.data) {
+          favoritesProduct[element.product.id] = true;
+          favoriteScreenProduct.add(element.product);
         }
-      isLoading= false;
+      }
+      isLoading = false;
       update();
+    }).catchError((e) {
+      Get.snackbar("something Wrong", e.toString());
     });
   }
 
-
-  addOrRemoveFromFavorite(int id)
-  {
-    if(favoritesProduct[id]==true)
-    {
-      favoriteScreenProduct.removeWhere((element) => element.id==id);
+  addOrRemoveFromFavorite(int id) {
+    if (favoritesProduct[id] == true) {
+      favoriteScreenProduct.removeWhere((element) => element.id == id);
       favoritesProduct.update(id, (value) => false);
       update();
-    }
-    else{
+    } else {
       for (var element in homeController.data.data.products) {
-        if(element.id==id)
-        {
+        if (element.id == id) {
           favoriteScreenProduct.add(element);
-          favoritesProduct[id]=true;
+          favoritesProduct[id] = true;
           update();
         }
       }
     }
-    api.post(url:AppApiConstance.favoritesURl ,
-        body:{
-          "product_id": id.toString() ,
-        },
-        headers: {
-          'lang':'ar',
-          'Authorization':token.toString(),
-        }).then((value) => value['status']==false?Get.snackbar('Error', value.toString()):null);
+    api.post(url: AppApiConstance.favoritesURl, body: {
+      "product_id": id.toString(),
+    }, headers: {
+      'lang': 'ar',
+      'Authorization': token.toString(),
+    }).then((value) => value['status'] == false
+        ? Get.snackbar('Error', value.toString())
+        : null);
   }
-  @override
-  goToProductDetails(ProductModel product)
-  {
-    ProductModel? productModel ;
-    for(var element in homeController.data.data.products)
-      {
-        if(product.id==element.id)
-          {
-            productModel= element ;
-          }
-   }
 
-    Get.toNamed(AppRoutes.productDetailsScreen,arguments:{'productModel':productModel});
+  @override
+  goToProductDetails(ProductModel product) {
+    ProductModel? productModel;
+    for (var element in homeController.data.data.products) {
+      if (product.id == element.id) {
+        productModel = element;
+      }
+    }
+
+    Get.toNamed(AppRoutes.productDetailsScreen,
+        arguments: {'productModel': productModel});
   }
 
   @override

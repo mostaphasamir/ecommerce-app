@@ -13,13 +13,9 @@ class BottomNavigation extends StatelessWidget {
     return GetBuilder<BottomNavigationControllerImp>(
       init: BottomNavigationControllerImp(),
       builder:(controller)=> Scaffold(
-        backgroundColor: AppColor.gray,
+        // backgroundColor: AppColor.gray,
         bottomNavigationBar:BottomNavigationBar(
           currentIndex: controller.currentIndex,
-          selectedItemColor: AppColor.primary,
-          unselectedItemColor: AppColor.black,
-          backgroundColor: Colors.white,
-          elevation: 10,
           items:  [
             BottomNavigationBarItem(
               icon: const Icon(Icons.home_outlined),
@@ -43,10 +39,10 @@ class BottomNavigation extends StatelessWidget {
             ),
           ],
           onTap:(value) {
-            controller.changeIndex(value) ;
+            controller.changeScreen(value) ;
           } ,
         ) ,
-        body:controller.screen[controller.currentIndex],
+        body:controller.currentScreen,
       ),
     );
   }

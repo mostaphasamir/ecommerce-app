@@ -9,26 +9,28 @@ import '../../core/localization/change_local.dart';
 class ProfileScreen extends StatelessWidget {
    ProfileScreen({Key? key}) : super(key: key);
    final LocalController localController=Get.find();
-   final controller = Get.put(ProfileControllerImp());
+   final ProfileControllerImp controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileControllerImp>(
       builder: (controller) =>
       controller.isLoading?
-      const Center(child: CircularProgressIndicator(color: AppColor.primary,),)
+       Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),)
           :Container(
         alignment: Alignment.center,
         width:double.infinity ,
         height: double.infinity,
-        color: AppColor.gray,
+        color: Theme.of(context).colorScheme.background,
         child: Padding(
           padding:  EdgeInsets.symmetric(horizontal: AppWidth.w5),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center ,
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(controller.userData.data!.image,
+                backgroundImage:NetworkImage(
+                  controller.userData.data!.image,
                 ),
+                backgroundColor: Theme.of(context).primaryColor,
                 radius: 60,
               ),
               SizedBox(height: AppHeight.h2,),
@@ -43,7 +45,9 @@ class ProfileScreen extends StatelessWidget {
                   color: AppColor.white,
                 ),
                 child: ListTile(leading: const Icon(Icons.person,color: AppColor.black,),
-                  onTap:(){} ,
+                  onTap:(){
+                      controller.goToUpdateProfile(controller.userData);
+                  } ,
                   iconColor: AppColor.white,
                   title: Text('Update Profile'.tr,style: const TextStyle(color: AppColor.black),),
                 ),
@@ -56,13 +60,13 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: ListTile(leading: const Icon(Icons.sunny,color: AppColor.black,),
                   onTap:(){
-                    localController.changeTheme();
+                    // localController.changeTheme();
                   } ,
                   title:  Text('dark theme'.tr,style: const TextStyle(color: AppColor.black)),
                   trailing: Switch(
                       onChanged: (value) {
-                    controller.changeTheme(value);
-                  }, value: controller.darkTheme
+                    controller.changeTheme();
+                  },value: controller.darkTheme
                   ),
                 ),
               ),
@@ -88,7 +92,7 @@ class ProfileScreen extends StatelessWidget {
                 child: ListTile(leading: const Icon(Icons.logout,color: AppColor.black,),
                   onTap:(){
                     controller.logout();
-                  } ,
+                    } ,
                   title:  Text('Logout'.tr,style: const TextStyle(color: AppColor.black)),
                 ),
               ),

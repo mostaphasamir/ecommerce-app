@@ -7,7 +7,7 @@ import '../widget/favorite_screen_item.dart';
 
 class FavoriteScreen extends StatelessWidget {
    FavoriteScreen({Key? key}) : super(key: key);
-  final controller = Get.put(FavoriteControllerImp(),permanent: true);
+  final controller = Get.lazyPut(() =>FavoriteControllerImp(),fenix: true);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -16,22 +16,27 @@ class FavoriteScreen extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
-        color: AppColor.gray,
+        color: Theme.of(context).colorScheme.background,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Favorites'.tr, style: Theme
                 .of(context)
                 .textTheme
-                .displayLarge,),
+                .titleLarge,),
             const SizedBox(height: 10,),
             GetBuilder<FavoriteControllerImp>
               (
               builder: (controller) =>
             controller.isLoading ?
-            const Center(child: CircularProgressIndicator(color: AppColor.primary,)):
+             Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,)):
                 GetX<FavoriteControllerImp>(
                   builder: (controller) =>
+                      controller.favoriteScreenProduct.isEmpty?
+                          Center(
+                            child: Text('oops... Your Favorite is empty',style: Theme.of(context).textTheme.bodyMedium,),
+                          )
+                          :
                       Expanded(
                         child: ListView.separated(
                           itemBuilder: (context, index) =>

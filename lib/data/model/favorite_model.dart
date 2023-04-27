@@ -9,12 +9,12 @@ class FavoriteModel {
 
   final bool status;
   final dynamic message;
-  final Data data;
+  final Data ? data;
 
   factory FavoriteModel.fromJson(Map<String, dynamic> json) => FavoriteModel(
     status: json["status"],
     message: json["message"],
-    data: Data.fromJson(json["data"]),
+    data:json["data"] !=null? Data.fromJson(json["data"]):null,
   );
 
 }
