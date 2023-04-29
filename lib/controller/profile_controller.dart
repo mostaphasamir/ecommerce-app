@@ -38,6 +38,7 @@ class ProfileControllerImp extends ProfileController
   changeTheme(bool value)
   {
     darkTheme =value ;
+    localController.changeTheme();
     update();
   }
 

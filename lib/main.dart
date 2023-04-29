@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           translations: Languages(),
           locale: controller.local,
           theme: AppTheme.customLightTheme,
+          darkTheme: AppTheme.customDarkTheme,
           initialRoute: AppRoutes.login,
           getPages: routes ,
         );

@@ -9,7 +9,6 @@ class AppTheme {
   static ThemeData customLightTheme=ThemeData.light().copyWith(
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColor.gray,
-
     inputDecorationTheme: const InputDecorationTheme(
       border: InputBorder.none,
       hintStyle: TextStyle(fontFamily:'Source_Serif_Pro' ,color: Colors.grey),

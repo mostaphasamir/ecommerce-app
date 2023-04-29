@@ -56,13 +56,13 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: ListTile(leading: const Icon(Icons.sunny,color: AppColor.black,),
                   onTap:(){
-                    // localController.changeTheme();
+                    localController.changeTheme();
                   } ,
                   title:  Text('dark theme'.tr,style: const TextStyle(color: AppColor.black)),
                   trailing: Switch(
                       onChanged: (value) {
                     controller.changeTheme(value);
-                  },value: controller.darkTheme
+                  }, value: controller.darkTheme
                   ),
                 ),
               ),
