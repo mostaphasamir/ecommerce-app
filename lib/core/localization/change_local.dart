@@ -11,22 +11,33 @@ class LocalController extends GetxController
   Locale? local ;
   ThemeData themeData = ThemeData();
   TextTheme textTheme = const TextTheme();
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 6a1b720 (last commit)
    changeLang()
   {
     if(local==const Locale('ar'))
       {
         local=const Locale('en');
         services.sharedPreferences.setString('lang', 'en');
+<<<<<<< HEAD
         AppApiConstance.baseHeaders.update('lang', (value) => 'en');
+=======
+        //AppApiConstance.baseHeaders.update('lang', (value) => 'en');
+>>>>>>> parent of 6a1b720 (last commit)
         Get.updateLocale(local!);
       }
     else
       {
         local=const Locale('ar');
         services.sharedPreferences.setString('lang', 'ar');
+<<<<<<< HEAD
        AppApiConstance.baseHeaders.update('lang', (value) => 'ar');
+=======
+       // AppApiConstance.baseHeaders.update('lang', (value) => 'ar');
+>>>>>>> parent of 6a1b720 (last commit)
         Get.updateLocale(local!);
       }
   }
