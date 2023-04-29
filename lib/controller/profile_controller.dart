@@ -38,10 +38,7 @@ class ProfileControllerImp extends ProfileController
   changeTheme(bool value)
   {
     darkTheme =value ;
-<<<<<<< HEAD
     localController.changeTheme();
-=======
->>>>>>> parent of 6a1b720 (last commit)
     update();
   }
 

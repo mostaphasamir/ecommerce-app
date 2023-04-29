@@ -62,11 +62,7 @@ class ProfileScreen extends StatelessWidget {
                   trailing: Switch(
                       onChanged: (value) {
                     controller.changeTheme(value);
-<<<<<<< HEAD
                   }, value: controller.darkTheme
-=======
-                  },value: controller.darkTheme
->>>>>>> parent of 6a1b720 (last commit)
                   ),
                 ),
               ),
