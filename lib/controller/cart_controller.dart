@@ -26,17 +26,18 @@ class CartControllerImp extends CartController {
   RxDouble total = 0.0.obs;
 
   Api api = Api();
-  bool isLoading = false;
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
-    isLoading = true;
     getCartProduct();
     super.onInit();
   }
 
   @override
   getCartProduct() {
+    isLoading(true);
+    cartProduct.clear();
     api.get(url: AppApiConstance.cartURl, headers: AppApiConstance.baseHeaders)
         .then((value) {
       cartDate = CartModel.fromJson(value);
@@ -49,7 +50,7 @@ class CartControllerImp extends CartController {
     }).then(
       (value) {
         checkOutCalc();
-        isLoading = false;
+        isLoading(false);
         update();
       },
     );

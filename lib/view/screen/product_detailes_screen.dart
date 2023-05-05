@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce/controller/cart_controller.dart';
 import 'package:ecommerce/core/constance/app_color.dart';
+import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -54,7 +56,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Add TO Cart".tr,style: Theme.of(context).textTheme.titleSmall),
+                            Text("Add TO Cart".tr,style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppColor.white)),
                             const SizedBox(
                               width: 15,
                             ),
@@ -109,11 +111,18 @@ class ProductDetailsScreen extends StatelessWidget {
                       bucket: PageStorageBucket(),
                       child: CarouselSlider(
                         carouselController: controller.carouselController,
-                        items: controller.productModel.images?.map((e) => Image(
-                                  image: NetworkImage(e),
-                                  width: double.infinity,
-                                  fit: BoxFit.contain,
-                                ),)
+                        items: controller.productModel.images?.map((e) => CachedNetworkImage(
+                          width: double.infinity,
+                          imageUrl: e,
+                          placeholder: (context, url) => FadeShimmer.round(
+                            size: 60,
+                            fadeTheme:FadeTheme.light,
+                          ),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                        ),
+
+
+                        )
                             .toList(),
                         options: CarouselOptions(
                           height: 300,

@@ -17,8 +17,8 @@ class CartScreen extends StatelessWidget {
           height: double.infinity,
           alignment: Alignment.center,
           color: Theme.of(context).colorScheme.background,
-          child: GetBuilder<CartControllerImp>(
-            builder: (controller) => controller.isLoading
+          child: GetX<CartControllerImp>(
+            builder: (controller) => controller.isLoading.value
                 ?  CircularProgressIndicator(
               color: Theme.of(context).primaryColor,
                   )
@@ -66,7 +66,7 @@ class CartScreen extends StatelessWidget {
                           height: 50,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              color: AppColor.white,
+                              color: Theme.of(context).colorScheme.primary,
                               borderRadius: BorderRadius.circular(2),
                               border: Border.all(
                                   color: AppColor.primary.withOpacity(0.2)),

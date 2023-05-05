@@ -89,6 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  fade_shimmer:
+    dependency: "direct main"
+    description:
+      name: fade_shimmer
+      sha256: "7410220ba0ccfa3abef630ec64e2398b9e136fbeb6fe2f8ce86d939f46b3491e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   fake_async:
     dependency: transitive
     description:
@@ -328,14 +336,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
-  shaky_animated_listview:
-    dependency: "direct main"
-    description:
-      name: shaky_animated_listview
-      sha256: "5925c5865eb86c886e21e2c2eb3137ffb0b14f73761f21aea246a646f67f39f5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.5"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -534,5 +534,5 @@ packages:
     source: hosted
     version: "1.0.0"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
+  dart: ">=2.18.2 <3.0.0"
   flutter: ">=3.3.0"

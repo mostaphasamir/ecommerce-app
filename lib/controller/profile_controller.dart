@@ -1,3 +1,6 @@
+import 'package:ecommerce/controller/cart_controller.dart';
+import 'package:ecommerce/controller/favorite_controller.dart';
+import 'package:ecommerce/controller/home_controller.dart';
 import 'package:ecommerce/core/api/api.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +15,7 @@ abstract class ProfileController extends GetxController
   getProfileData();
   logout();
   changeTheme();
+  changeLanguage();
   goToUpdateProfile(ShopLoginModel userData);
 }
 class ProfileControllerImp extends ProfileController
@@ -20,7 +24,6 @@ class ProfileControllerImp extends ProfileController
 
   MyServices myServices=Get.find();
   final LocalController localController=Get.find();
-  bool isDarkTheme = false ;
   Api api =Api();
   bool isLoading=false ;
   bool darkTheme=false ;
@@ -47,7 +50,23 @@ class ProfileControllerImp extends ProfileController
   changeTheme()
   {
     localController.changeTheme();
+    darkTheme =! darkTheme  ;
   }
+
+  @override
+  changeLanguage() {
+    HomeControllerImp homeControllerImp = Get.find();
+    FavoriteControllerImp favoriteControllerImp = Get.find();
+    CartControllerImp cartControllerImp = Get.find();
+
+    localController.changeLang();
+    homeControllerImp.getData();
+    favoriteControllerImp.onInit();
+    cartControllerImp.getCartProduct();
+
+  }
+
+
 
 
   @override
@@ -69,7 +88,8 @@ class ProfileControllerImp extends ProfileController
   void onInit() {
     isLoading=true;
     getProfileData();
-    isDarkTheme = Get.isDarkMode;
+    darkTheme = Get.isDarkMode;
     super.onInit();
   }
+
 }

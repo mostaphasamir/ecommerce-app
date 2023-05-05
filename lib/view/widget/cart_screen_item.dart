@@ -1,3 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/core/constance/app_value.dart';
+import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,25 +16,36 @@ Widget cartItem({
   required VoidCallback decQuantity ,
 
 })=> Container(
-  color: AppColor.white,
+  color: Theme.of(context).colorScheme.primary,
   child: Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Padding(
         padding: const EdgeInsets.only(left: 10,top: 10,bottom: 10),
-        child: Image(
-          image:NetworkImage(
-            cartProduct.image,
-          ),
+        child:  CachedNetworkImage(
           width: 100,
           height: 100,
+          imageUrl: cartProduct.image,
+          placeholder: (context, url) => FadeShimmer.round(
+            size: 10,
+            fadeTheme: Get.isDarkMode?FadeTheme.dark:FadeTheme.light,
+          ),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
+
+        // Image(
+        //   image:NetworkImage(
+        //     cartProduct.image,
+        //   ),
+        //   width: 100,
+        //   height: 100,
+        // ),
       ),
       const SizedBox(
         width: 10,
       ),
       SizedBox(
-          height: 100,
+          height: AppHeight.h14,
           width: Get.width*0.4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,6 +54,7 @@ Widget cartItem({
                 cartProduct.name,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
+                textDirection: Get.locale!.languageCode=="ar"? TextDirection.rtl :TextDirection.ltr ,
                 style: Theme.of(context).textTheme.displayMedium,
               ),
               Row(

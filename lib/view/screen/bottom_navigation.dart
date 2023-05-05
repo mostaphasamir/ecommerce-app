@@ -1,4 +1,3 @@
-import 'package:ecommerce/core/constance/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +12,6 @@ class BottomNavigation extends StatelessWidget {
     return GetBuilder<BottomNavigationControllerImp>(
       init: BottomNavigationControllerImp(),
       builder:(controller)=> Scaffold(
-        // backgroundColor: AppColor.gray,
         bottomNavigationBar:BottomNavigationBar(
           currentIndex: controller.currentIndex,
           items:  [

@@ -1,6 +1,7 @@
 import 'package:sizer/sizer.dart';
 
 class AppHeight {
+  static double h05 = 0.5.h;
   static double h1 = 1.h;
   static double h2 = 2.h;
   static double h3 = 3.h;
@@ -11,15 +12,18 @@ class AppHeight {
   static double h8 = 8.h;
   static double h10 = 10.h;
   static double h12 = 12.h;
+  static double h14= 14.h;
   static double h16 = 16.h;
   static double h18 = 18.h;
   static double h20 = 20.h;
   static double h25 = 25.h;
+  static double h26 = 26.h;
   static double h40 = 40.h;
   static double h30 = 30.h;
   static double h33 = 33.h;
-  static double h35 = 35.h;
+  static double h37 = 37.h;
   static double h50 = 50.h;
+  static double h55 = 55.h;
   static double h70 = 70.h;
   static double h78 = 78.h;
   static double h80 = 80.h;
@@ -27,7 +31,10 @@ class AppHeight {
 }
 
 class AppWidth {
+  static double w105 = 1.5.w;
+  static double w1 = 1.w;
   static double w4 = 4.w;
+  static double w3 = 3.w;
   static double w5 = 5.w;
   static double w6 = 6.w;
   static double w8 = 8.w;
@@ -37,15 +44,9 @@ class AppWidth {
   static double w16 = 16.w;
   static double w20 = 20.w;
   static double w30 = 30.w;
+  static double w55 = 55.w;
   static double w100 = 100.w;
 }
 
-class AppFontSize {
-  static double fs12 = 12.sp ;
-  static double fs13 = 13.sp ;
-  static double fs16 = 16.sp ;
-  static double fs30 = 30.sp ;
-  static double fs40 = 40.sp ;
 
-}
 

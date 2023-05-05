@@ -17,7 +17,7 @@ void main() async{
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
       .then((_) {
-    runApp(const MyApp());
+    runApp( const MyApp());
   });
 }
 

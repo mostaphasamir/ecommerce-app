@@ -1,8 +1,12 @@
+import 'package:ecommerce/core/localization/change_local.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../core/api/api.dart';
 import '../core/api/constance.dart';
 import '../core/constance/app_routs.dart';
+import '../core/service/services.dart';
 import '../data/model/home_model.dart';
 
 abstract class HomeController extends GetxController
@@ -18,16 +22,20 @@ class HomeControllerImp extends HomeController
   RxBool isLoading = false.obs;
   Api api =Api();
 
-  @override
-  getData()
-  {
-    api.get(url: AppApiConstance.homeURl,headers: AppApiConstance.baseHeaders).then((value){
-      data =HomeModel.fromJson(value) ;
-      isLoading(false);
-    }).catchError((e){
-      Get.snackbar("something Wrong", e.toString());
+  GlobalKey<RefreshIndicatorState> refreshKeu = GlobalKey<RefreshIndicatorState>();
 
-    });
+  @override
+  Future<void> getData() async {
+    isLoading(true);
+    try {
+      var response = await api.get(
+          url: AppApiConstance.homeURl, headers: AppApiConstance.baseHeaders);
+      data = HomeModel.fromJson(response);
+      isLoading(false);
+    }catch(e)
+    {
+      Get.snackbar("something Wrong", e.toString());
+    }
   }
 
   @override
@@ -47,10 +55,10 @@ class HomeControllerImp extends HomeController
 
   @override
   void onInit() {
-    isLoading(true);
     getData();
     super.onInit();
   }
+
 
 }
 

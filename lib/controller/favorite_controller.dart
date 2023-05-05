@@ -18,13 +18,15 @@ class FavoriteControllerImp extends FavoriteController {
 
   List<ProductModel> favoriteScreenProduct = <ProductModel>[].obs;
 
-  bool isLoading = false;
+  RxBool isLoading = false.obs;
   final Map<int, bool> favoritesProduct = {};
   late FavoriteModel favoriteData;
   Api api = Api();
 
   @override
   getFavoriteProduct() async {
+    isLoading(true);
+    favoriteScreenProduct.clear();
     api.get(
             url: AppApiConstance.favoritesURl,
             headers: AppApiConstance.baseHeaders
@@ -36,7 +38,7 @@ class FavoriteControllerImp extends FavoriteController {
           favoriteScreenProduct.add(element.product);
         }
       }
-      isLoading = false;
+      isLoading(false);
       update();
     }).catchError((e) {
       Get.snackbar("something Wrong", e.toString());
@@ -82,7 +84,6 @@ class FavoriteControllerImp extends FavoriteController {
 
   @override
   void onInit() {
-    isLoading = true;
     getFavoriteProduct();
     super.onInit();
   }

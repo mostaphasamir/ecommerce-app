@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'app_color.dart';
+import 'package:sizer/sizer.dart';
 
 class AppTheme {
   static ThemeData customLightTheme = ThemeData(
@@ -37,9 +38,9 @@ class AppTheme {
       primary: AppColor.primaryDark,
       background: AppColor.black,
     ),
-    indicatorColor: AppColor.primaryDark,
+    indicatorColor: AppColor.white,
     secondaryHeaderColor: AppColor.gray,
-    scaffoldBackgroundColor: AppColor.gray,
+    scaffoldBackgroundColor: AppColor.black,
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: AppColor.black,
       selectedItemColor: Color(0xff9147ff),
@@ -153,7 +154,8 @@ class AppFontTheme {
       fontFamily:Get.locale?.languageCode == 'ar' ? 'Cairo' : 'Source_Serif_Pro',
       color: AppColor.white,
       fontSize: 16,
-      fontWeight: FontWeight.w300,),
+      fontWeight: FontWeight.w300,
+    ),
     displaySmall: TextStyle(
       fontFamily:
       Get.locale?.languageCode == 'ar' ? 'Cairo' : 'Source_Serif_Pro',

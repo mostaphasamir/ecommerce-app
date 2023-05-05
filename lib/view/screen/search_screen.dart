@@ -10,19 +10,17 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.gray,
       appBar: AppBar(
-        backgroundColor: AppColor.primary,
         title: TextField(
           onChanged: (value) {
             controller.changeSearchValue(value);
           },
           style: const TextStyle(
-            color: AppColor.white
+            color: AppColor.white,
           ),
           decoration:  InputDecoration(
             hintText: 'Search for product ...'.tr,
-            hintStyle: const TextStyle(color: AppColor.white)
+            hintStyle: const TextStyle(color: AppColor.white,)
           ),
         ),
       ),
@@ -45,7 +43,7 @@ class SearchScreen extends StatelessWidget {
                         child: Container(
                           margin: const EdgeInsets.only(left: 10,right: 10,top: 10),
                           decoration: BoxDecoration(
-                          color: AppColor.white,
+                          color: Theme.of(context).colorScheme.primary,
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(color: AppColor.primary.withOpacity(.2))
                           ),

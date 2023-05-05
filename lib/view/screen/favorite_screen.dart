@@ -1,4 +1,4 @@
-import 'package:ecommerce/core/constance/app_color.dart';
+import 'package:ecommerce/core/constance/app_value.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +12,7 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+        padding:  EdgeInsets.only(top: AppHeight.h3, left: AppWidth.w5, right: AppWidth.w5),
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
@@ -25,10 +25,10 @@ class FavoriteScreen extends StatelessWidget {
                 .textTheme
                 .titleLarge,),
             const SizedBox(height: 10,),
-            GetBuilder<FavoriteControllerImp>
+            GetX<FavoriteControllerImp>
               (
               builder: (controller) =>
-            controller.isLoading ?
+            controller.isLoading.value ?
              Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,)):
                 GetX<FavoriteControllerImp>(
                   builder: (controller) =>
@@ -53,7 +53,7 @@ class FavoriteScreen extends StatelessWidget {
                                 context: context,
                               ),
                           separatorBuilder: (_, __) =>
-                          const SizedBox(height: 6,),
+                          SizedBox(height: AppHeight.h1,),
                           itemCount: controller.favoriteScreenProduct.length,
                         ),
                       ),
