@@ -1,4 +1,3 @@
-import 'package:ecommerce/core/localization/change_local.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +5,6 @@ import 'package:get/get.dart';
 import '../core/api/api.dart';
 import '../core/api/constance.dart';
 import '../core/constance/app_routs.dart';
-import '../core/service/services.dart';
 import '../data/model/home_model.dart';
 
 abstract class HomeController extends GetxController
