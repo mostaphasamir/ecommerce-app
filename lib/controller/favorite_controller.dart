@@ -21,7 +21,7 @@ class FavoriteControllerImp extends FavoriteController {
   RxBool isLoading = false.obs;
   final Map<int, bool> favoritesProduct = {};
   late FavoriteModel favoriteData;
-  Api api = Api();
+  ApiHelper api = ApiHelper();
 
   @override
   getFavoriteProduct() async {
@@ -29,7 +29,7 @@ class FavoriteControllerImp extends FavoriteController {
     favoriteScreenProduct.clear();
     api.get(
             url: AppApiConstance.favoritesURl,
-            headers: AppApiConstance.baseHeaders
+            headers: AppApiConstance.baseHeaders()
     ).then((value) {
       favoriteData = FavoriteModel.fromJson(value);
       if (favoriteData.data?.data != null) {

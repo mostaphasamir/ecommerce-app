@@ -28,7 +28,8 @@ class ProfileScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: AppWidth.w5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children:
+                    [
                       CachedNetworkImage(
                         imageUrl: controller.userData.data!.image,
                         imageBuilder: (context, imageProvider) => CircleAvatar(

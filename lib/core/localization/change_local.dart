@@ -17,14 +17,12 @@ class LocalController extends GetxController
       {
         local=const Locale('en');
         services.sharedPreferences.setString('lang', 'en');
-        AppApiConstance.baseHeaders.update('lang', (value) => 'en');
         Get.updateLocale(local);
       }
     else
       {
         local=const Locale('ar');
         services.sharedPreferences.setString('lang', 'ar');
-       AppApiConstance.baseHeaders.update('lang', (value) => 'ar');
         Get.updateLocale(local);
       }
   }
@@ -50,18 +48,15 @@ class LocalController extends GetxController
     if(sharedPrefLang=='ar')
     {
       local=const Locale('ar');
-      AppApiConstance.baseHeaders.update('lang', (value) => 'ar');
     }
     else if (sharedPrefLang =='en')
     {
       local=const Locale('en');
-      AppApiConstance.baseHeaders.update('lang', (value) => 'en');
     }
     else
     {
       var deviceLanguage = Get.deviceLocale!.languageCode ;
       local=Locale(deviceLanguage);
-      AppApiConstance.baseHeaders.update('lang', (value) => deviceLanguage);
     }
 
     if(sharedPrefMode=='dark')

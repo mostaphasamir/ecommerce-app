@@ -161,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                                             size: 10,
                                             fadeTheme:Get.isDarkMode?FadeTheme.dark:FadeTheme.light,
                                           ),
-                                          errorWidget: (context, url, error) => Icon(Icons.error),
+                                          errorWidget: (context, url, error) => const Icon(Icons.error),
                                         ),
 
 

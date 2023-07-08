@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'app_color.dart';
-import 'package:sizer/sizer.dart';
 
 class AppTheme {
   static ThemeData customLightTheme = ThemeData(
@@ -58,41 +57,6 @@ class AppTheme {
     primaryColor: AppColor.primaryDark,
     textTheme: AppFontTheme.appFontDarkTheme,
   );
-
-  // static ThemeData customDarkTheme = ThemeData(
-  //   brightness: Brightness.dark,
-  //   primaryColorLight: Color(0xff3b3e6d),
-  //   colorScheme: const ColorScheme.dark(background: Color(0xff1F1F1F)),
-  //   secondaryHeaderColor: Color(0xff353535),
-  //   scaffoldBackgroundColor: Color(0xff1F1F1F),
-  //   appBarTheme: AppBarTheme(
-  //     color: Color(0xff3b3e6d),
-  //     titleTextStyle: AppFontTheme.appFontLightTheme.titleLarge!
-  //         .copyWith(color: Colors.white),
-  //   ),
-  //   inputDecorationTheme: const InputDecorationTheme(
-  //     border: InputBorder.none,
-  //     hintStyle: TextStyle(fontFamily: 'Source_Serif_Pro', color: Colors.grey),
-  //     fillColor: Colors.white,
-  //   ),
-  //   primaryColor: Color(0xff3b3e6d),
-  //   textTheme: TextTheme(
-  //     displayLarge: TextStyle(
-  //         fontFamily:
-  //             Get.locale?.languageCode == 'ar' ? 'Cairo' : 'Source_Serif_Pro',
-  //         fontWeight: FontWeight.w800,
-  //         fontSize: 40,
-  //         color: Colors.white),
-  //     displayMedium: const TextStyle(
-  //         color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300),
-  //     titleLarge: TextStyle(
-  //         fontFamily:
-  //             Get.locale?.languageCode == 'ar' ? 'Cairo' : 'Source_Serif_Pro',
-  //         fontSize: 20,
-  //         fontWeight: FontWeight.w300,
-  //         color: Colors.white),
-  //   ),
-  // );
 }
 
 class AppFontTheme {

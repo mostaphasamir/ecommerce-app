@@ -25,7 +25,7 @@ class CartControllerImp extends CartController {
   var quantity = {}.obs;
   RxDouble total = 0.0.obs;
 
-  Api api = Api();
+  ApiHelper api = ApiHelper();
   RxBool isLoading = false.obs;
 
   @override
@@ -38,7 +38,7 @@ class CartControllerImp extends CartController {
   getCartProduct() {
     isLoading(true);
     cartProduct.clear();
-    api.get(url: AppApiConstance.cartURl, headers: AppApiConstance.baseHeaders)
+    api.get(url: AppApiConstance.cartURl, headers: AppApiConstance.baseHeaders())
         .then((value) {
       cartDate = CartModel.fromJson(value);
       if (cartDate.data?.cartItems != null) {

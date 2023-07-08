@@ -18,7 +18,7 @@ class HomeControllerImp extends HomeController
 {
   late HomeModel data;
   RxBool isLoading = false.obs;
-  Api api =Api();
+  ApiHelper api =ApiHelper();
 
   GlobalKey<RefreshIndicatorState> refreshKeu = GlobalKey<RefreshIndicatorState>();
 
@@ -27,7 +27,7 @@ class HomeControllerImp extends HomeController
     isLoading(true);
     try {
       var response = await api.get(
-          url: AppApiConstance.homeURl, headers: AppApiConstance.baseHeaders);
+          url: AppApiConstance.homeURl, headers: AppApiConstance.baseHeaders());
       data = HomeModel.fromJson(response);
       isLoading(false);
     }catch(e)

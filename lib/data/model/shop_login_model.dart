@@ -3,7 +3,7 @@ class ShopLoginModel {
 
   final dynamic message;
 
-  final UserData? data;
+  final UserData data;
 
   ShopLoginModel(
       {required this.status, required this.message, required this.data,});
@@ -13,7 +13,7 @@ class ShopLoginModel {
     return ShopLoginModel(
       status: jsonData['status'],
       message: jsonData['message'],
-      data:jsonData['data']==null?null: UserData.fromJson(jsonData['data']),
+      data:UserData.fromJson(jsonData['data']),
     );
   }
 }

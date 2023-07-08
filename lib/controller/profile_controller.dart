@@ -24,7 +24,7 @@ class ProfileControllerImp extends ProfileController
 
   MyServices myServices=Get.find();
   final LocalController localController=Get.find();
-  Api api =Api();
+  ApiHelper api =ApiHelper();
   bool isLoading=false ;
   bool darkTheme=false ;
 
@@ -34,7 +34,7 @@ class ProfileControllerImp extends ProfileController
     try {
       Map<String, dynamic> data = await api.get(
           url: AppApiConstance.profileURl,
-          headers: AppApiConstance.baseHeaders
+          headers: AppApiConstance.baseHeaders()
       );
       userData = ShopLoginModel.fromJson(data);
       isLoading = false;

@@ -21,7 +21,7 @@ class UpdateProfileControllerImp extends UpdateProfileController
 
   GlobalKey<FormState> formKey= GlobalKey<FormState>();
 
-  Api api= Api();
+  ApiHelper api= ApiHelper();
 
 
   final ProfileControllerImp profileController = Get.find();

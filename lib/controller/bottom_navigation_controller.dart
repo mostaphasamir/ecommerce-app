@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../view/screen/cart.dart';
 import '../view/screen/favorite_screen.dart';
-import '../view/screen/home.dart';
+import '../view/screen/home_screen.dart';
 import '../view/screen/profile_screen.dart';
 
 abstract class BottomNavigationController extends GetxController

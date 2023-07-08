@@ -125,7 +125,6 @@ class LoginScreen extends StatelessWidget {
                                   controller: controller.password,
                                   obscureText: controller.obscure,
                                   decoration: InputDecoration(
-                                    errorText: controller.errorPass?'Password Wrong'.tr:null,
                                       suffixIcon: IconButton(
                                         icon: Icon(controller.obscure
                                             ? Icons.remove_red_eye_outlined

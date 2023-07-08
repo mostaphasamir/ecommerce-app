@@ -5,7 +5,9 @@ import 'package:ecommerce/core/api/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart'as http;
-class Api
+
+import '../error_handler/error_handler.dart';
+class ApiHelper
 {
   Future<Map<String,dynamic>> get({required String url ,Map<String, String>? headers})async
   {
@@ -20,6 +22,7 @@ class Api
     }
     else
     {
+      ErrorHandle().showSnakeBar(response.body);
       throw Exception('there is a problem with status code ${response.statusCode}');
     }
   }

@@ -1,3 +1,5 @@
+import 'package:ecommerce/core/error_handler/error_handler.dart';
+import 'package:ecommerce/data/model/auth/register_request_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -6,6 +8,7 @@ import '../../core/api/constance.dart';
 import '../../core/constance/app_routs.dart';
 import '../../core/service/services.dart';
 import '../../data/model/shop_register_model.dart';
+import '../../service/auth_services.dart';
 
 abstract class RegisterScreenController extends GetxController
 {
@@ -27,7 +30,7 @@ class RegisterScreenControllerImp extends RegisterScreenController
 
   bool obscure =true ;
   RxBool isLoading =false.obs ;
-  final Api _api =Api() ;
+  final ApiHelper _api =ApiHelper() ;
 
   MyServices myServices=Get.find();
 
@@ -61,39 +64,13 @@ class RegisterScreenControllerImp extends RegisterScreenController
     if(globalKey.currentState!.validate())
       {
       isLoading(true);
-        try{
-        Map<String,dynamic> data=await _api.post(url: AppApiConstance.registerURL, body: {
-            'name':name.text,
-            'phone':phone.text,
-            'email':email.text,
-            'password':password.text,
-          } , headers: {'lang':'ar'});
 
-        RegisterModel shop = RegisterModel.fromJson(data);
-
-         if(shop.status==true)
-         {
-         myServices.sharedPreferences.setString('token', shop.data!.token);
-         token = shop.data!.token;
-         AppApiConstance.baseHeaders.update("Authorization", (value) => token);
-           goToHome();
-         }
-         else
-           {
-             if(shop.message=='This phone has been used before'||shop.message=='رقم الهاتف الذي قمت بإدخاله مستخدم من قبل')
-               {
-                 numberUsed = true ;
-                 update();
-               }
-             if(shop.message=='This email has been used before'||shop.message=='البريد الإلكتروني مستخدم من قبل')
-               {
-                 emailUsed = true ;
-                 update();
-               }
-           }
-        }catch(e){
-          Get.snackbar('something wrong happened', e.toString());
-        }
+      final result =await AuthService().register(RegisterRequestModel(name: name.text, email: email.text, password: password.text, phone: phone.text));
+      result.fold((l) => ErrorHandle().showSnakeBar(l.message) , (r) {
+        myServices.sharedPreferences.setString('token', r.data.token);
+        token = r.data.token;
+        goToHome();
+      });
         isLoading(false);
       }
   }

@@ -13,10 +13,9 @@ class MyMiddleWare extends GetMiddleware
   int get priority =>1;
 
   @override
-  RouteSettings?  redirect(String? route) {
+  RouteSettings? redirect(String? route) {
     if(myServices.sharedPreferences.getString('token')!=null){
       token = myServices.sharedPreferences.getString('token')!;
-      AppApiConstance.baseHeaders.update('Authorization', (value) => token);
       return const RouteSettings(name: AppRoutes.home);
     }
     return null;
